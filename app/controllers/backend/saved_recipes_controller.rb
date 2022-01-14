@@ -15,10 +15,12 @@ class Backend::SavedRecipesController < ApplicationController
 
   # POST /saved_recipes
   def create
+    # byebug
+    # SavedRecipe.create!(saved_recipe_params)
     @saved_recipe = SavedRecipe.new(saved_recipe_params)
 
     if @saved_recipe.save
-      render json: @saved_recipe, status: :created, location: @saved_recipe
+      render json: @saved_recipe, status: :created
     else
       render json: @saved_recipe.errors, status: :unprocessable_entity
     end
@@ -46,6 +48,6 @@ class Backend::SavedRecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def saved_recipe_params
-      params.require(:saved_recipe).permit(:title, :ingredients, :equipment, :instructions, :cooked_by_user?, :user_original?, :original_url, :user_id)
+      params.require(:saved_recipe).permit(:title, :ingredients, :equipment, :instructions)
     end
 end

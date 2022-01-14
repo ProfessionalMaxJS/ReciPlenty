@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer';
 import {useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 
 function NavBar(){
 
@@ -31,12 +32,17 @@ function NavBar(){
         .then(d=>setTrivia(d.text))
     }
 
+    const aFemaleDeer = useNavigate()
+    const doeReMi = () => {
+      aFemaleDeer("/EditorComponent")
+    }
+
     return(
         <>
         <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar style={{justifyContent: "space-between"}}>
-            <Button style={{background: "white"}} variant="outlined" onClick={fuckOff}>Test</Button>
+            <Button style={{background: "white"}} variant="outlined" onClick={doeReMi}>Test</Button>
             <Button style={{background: "white"}} variant="outlined" onClick={fuckOff}>Test2</Button>
             <Button style={{background: "white"}} variant="outlined" onClick={handleTrivia}>Trivia</Button>
             <Button style={{background: "white"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>

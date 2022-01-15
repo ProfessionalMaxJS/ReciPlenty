@@ -3,9 +3,9 @@ import { Editor } from 'react-draft-wysiwyg';
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {useState} from 'react'
 
-function EditBox(){
+function EditBox({editorState, setEditorState}){
 
-    const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+    // const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
 
     return(

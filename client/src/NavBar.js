@@ -42,10 +42,10 @@ function NavBar(){
         <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar style={{justifyContent: "space-between"}}>
-            <Button style={{background: "white"}} variant="outlined" onClick={doeReMi}>Test</Button>
-            <Button style={{background: "white"}} variant="outlined" onClick={fuckOff}>Test2</Button>
-            <Button style={{background: "white"}} variant="outlined" onClick={handleTrivia}>Trivia</Button>
-            <Button style={{background: "white"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>
+            <Button style={{background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={doeReMi}>Test</Button>
+            <Button style={{background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={fuckOff}>Test2</Button>
+            <Button style={{background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleTrivia}>Trivia</Button>
+            <Button style={{background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>
         </Toolbar>
         </AppBar>
         </Box>

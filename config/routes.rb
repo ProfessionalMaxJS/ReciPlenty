@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   
   namespace :backend do
-      resources :saved_recipes
-      resources :users
+    resources :saved_recipes
+    resources :users
+    post "/add_user_recipe", to: "saved_recipes#user_create"
   end
   
   # Routing logic: fallback requests for React Router.

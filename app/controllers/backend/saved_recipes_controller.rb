@@ -13,11 +13,9 @@ class Backend::SavedRecipesController < ApplicationController
     render json: @saved_recipe
   end
 
-  # POST /saved_recipes
-  def create
-    # byebug
-    # SavedRecipe.create!(saved_recipe_params)
-    @saved_recipe = SavedRecipe.new(saved_recipe_params)
+  def user_create
+    user_create_params = saved_recipe_params.merge(:user_original? => true)
+    @saved_recipe = SavedRecipe.new(user_create_params)
 
     if @saved_recipe.save
       render json: @saved_recipe, status: :created

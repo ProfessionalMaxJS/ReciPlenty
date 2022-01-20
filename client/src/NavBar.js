@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useState} from 'react'
+import {useState, useEffect } from 'react'
 import {useNavigate} from 'react-router-dom'
 import Box from '@mui/material/Box'
 import AppBar from '@mui/material/AppBar'
@@ -10,7 +10,7 @@ import RecipesList from './RecipesList'
 import Menu from '@mui/material/Menu'
 import TextField from '@mui/material/TextField'
 
-function NavBar({handleTrivia}){
+function NavBar({loggedIn}){
 
   const elloGuvnah = () => {console.log("elloGuvnah!")}
 
@@ -30,14 +30,19 @@ function NavBar({handleTrivia}){
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);    
     const [search, setSearch] = useState("")
+
     const handleSearch = (e) => {setSearch(e.target.value)}
+
     const handleSearchResults = (event) => {
-      fetch(`https://api.spoonacular.com/recipes/searchComplex?query=${search}&number=5&instructionsRequired=true&apiKey=b5e32d122c6b42b69718e6565a960525`)
+      if(loggedIn)
+      {fetch(`https://api.spoonacular.com/recipes/searchComplex?query=${search}&number=5&instructionsRequired=true&apiKey=b5e32d122c6b42b69718e6565a960525`)
       .then(r=>r.json())
       .then(data=>setRecipes(data.results))
-      .then(setAnchorEl(event.currentTarget));
-
+      .then(setAnchorEl(event.currentTarget));}
+      else
+      {alert("INTRUDERRRRRR!!!")}
     };
+
     const handleClose = () => {
       setAnchorEl(null);
       setSearch("")
@@ -45,20 +50,31 @@ function NavBar({handleTrivia}){
     
     const toTheEditor = useNavigate()
     const handleAddRecipe = () => {
-      toTheEditor("/UserOriginal")
+      if(loggedIn)
+      {toTheEditor("/UserOriginal")}
+      else
+      {alert("INTRUDERRRRRR!!!")}
     }
     
     const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      if(loggedIn)
+        {if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
           return;
         }
        setState({ ...state, [anchor]: open });
 
         fetch("/backend/saved_recipes")
         .then(r=>r.json())
-        .then(d=>setRecipes(d))
+        .then(d=>setRecipes(d))}
+      else
+        {alert("INTRUDERRRRRR!!!")}
 
     };
+
+    const toTheHouse = useNavigate()
+    const handleHome = () =>{
+      toTheHouse("/")
+    }
 
 return(
   <>
@@ -69,7 +85,7 @@ return(
         <TextField style={{fontFamily: 'Alice, serif', color: "red", border: "1px solid white", borderRadius: "5px"}} placeholder="Find A Recipe..." value={search} onChange={handleSearch}/>
          <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleSearchResults}>Search Results</Button>
         <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleAddRecipe}>Write Your Own</Button>
-        <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleTrivia}>Trivia</Button>
+        <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleHome}>Home</Button>
         <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>
       </Toolbar>
     </AppBar>

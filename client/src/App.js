@@ -1,37 +1,31 @@
 import './App.css'
 import {useState} from 'react'
 import NavBar from './NavBar';
-import TriviaCard from "./TriviaCard"
 import {Routes, Route, useNavigate, Link} from 'react-router-dom'
 import UserOriginal from "./UserOriginal"
 import RecipeDisplayPage from './RecipeDisplayPage';
 import EntryPage from './EntryPage'
-// import EditPage from './EditPage'
+import {useEffect} from 'react'
 
 function App() {
 
-  const toTheCards = useNavigate()
-  const [trivia, setTrivia] = useState("")
-  const handleTrivia = () =>{
-      fetch("https://api.spoonacular.com/food/trivia/random?apiKey=b5e32d122c6b42b69718e6565a960525")
-      .then(r=>r.json())
-      .catch(err=>alert(err))
-      .then(d=>{setTrivia(d.text)
-                toTheCards("/")})
-  }
+  const [loggedIn, setLoggedIn] = useState(false)
+  useEffect(()=>{
+    fetch("/backend/logged_in")
+    .then(r=>r.json())
+    .then(d=>setLoggedIn(d.logged_in))
+  }, [])
 
   return (
     <>
-      <NavBar handleTrivia={handleTrivia} />
+      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
 <Routes>
-  <Route path="/" element={<TriviaCard trivia={trivia}/>} />
-  <Route path="/UserOriginal" element={<UserOriginal />} />
-  <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage /> } />
-  <Route path="/RecipeDisplayPage/:id/EditPage" element={<UserOriginal />} />
-  <Route path="/EntryPage" element={<EntryPage />} />
-  {/* <Route path="/EditPage" element={<EditPage />} /> */}
+  <Route path="/" element={<EntryPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+  <Route path="/UserOriginal" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+  <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> } />
+  <Route path="/RecipeDisplayPage/:id/EditPage" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 </Routes>
-    <Link style={{position: "absolute", bottom: "12px", right: "50%", transform: "translate( 50%)"}} to="EntryPage">Log In or Sign Up!</Link>
+    <Link style={{position: "absolute", bottom: "12px", right: "50%", transform: "translate( 50%)"}} to="/">Log In or Sign Up!</Link>
     </>
  
  );

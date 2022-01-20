@@ -5,7 +5,9 @@ import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 // import Container from '@mui/material/Container'
 import {useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import Divider from '@mui/material/Divider'
+import TriviaCard from './TriviaCard'
 
 function EntryPage(){
     
@@ -15,6 +17,7 @@ function EntryPage(){
   const [returnBonaFides, setReturnBonaFides] = useState({})
   const handleReturnBonaFides=(e)=>setReturnBonaFides({...returnBonaFides, [e.target.name]:e.target.value})
 
+  const toTheHouse = useNavigate()
   const handleSignUp=()=>{
     console.log(newBonaFides)
     fetch("/backend/signup", {
@@ -27,8 +30,10 @@ function EntryPage(){
       .then((r) => r.json())
       .then(d=>console.log(d))
       .then(setNewBonaFides({name:"", password:"", password_confirmation:""}))
+      .then(toTheHouse("/"))
   }
 
+ 
   function handleSignIn() {
     fetch("/backend/login", {
       method: "POST",
@@ -40,6 +45,7 @@ function EntryPage(){
       .then((r) => r.json())
       .then(d=>console.log(d))
       .then(setReturnBonaFides({name:"", password:""}))
+      .then(toTheHouse("/"))
   }
 
   function handleSignOut() {
@@ -58,8 +64,19 @@ function EntryPage(){
   //   color: theme.palette.text.secondary,
   // }));
 
+  // const toTheCards = useNavigate()
+  const [trivia, setTrivia] = useState("")
+  const handleTrivia = () =>{
+      fetch("https://api.spoonacular.com/food/trivia/random?apiKey=b5e32d122c6b42b69718e6565a960525")
+      .then(r=>r.json())
+      .catch(err=>alert(err))
+      .then(d=>setTrivia(d.text))}
+                // toTheCards("/")})
+
     return(
         <>
+        <Button onClick={handleTrivia}>TRIVIA</Button>
+        <TriviaCard trivia={trivia} />
     <div
       component="form"
       // sx={{

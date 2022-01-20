@@ -1,5 +1,5 @@
 class Backend::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  # before_action :set_user, only: [:show, :update, :destroy]
   skip_before_action :authorize, only: [:create, :index]
 
 def index

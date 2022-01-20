@@ -16,7 +16,7 @@ class Backend::SessionsController < ApplicationController
 
   def show
     if(session[:user_id])
-      render json: {logged_in?: true, status: :ok}
+      render json: {logged_in: true, status: :ok}
     else
       render json: {logged_in: false, status: :unauthorized}
     end

@@ -10,21 +10,24 @@ function RecipeDisplayPage(){
 
     const id = useParams().id
     // console.log(id)
+    const [checked, setChecked] = useState(false)    
     const [recipe, setRecipe] = useState({})
+
     useEffect (()=>{
         if (id>999)
         {fetch(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=b5e32d122c6b42b69718e6565a960525`)
         .then(r=>r.json())
         .then(d=>{
             let newStr=""
-            console.log(d)
+            // console.log(d)
             d.extendedIngredients.map(eI=>newStr+=`${eI.name} \n`)
             setRecipe({title: d.title, instructions: d.instructions, ingredients: newStr, userOriginal: false, source_url: d.sourceUrl})
         })}
         else
         {fetch(`/backend/saved_recipes/${id}`)
         .then(r=>r.json())
-        .then(d=>setRecipe(d))}
+        .then(d=>{setRecipe(d)
+                  setChecked(d.cooked_by_user)})}
     }, [id])
 
     const handleRecipeSubmit = () => {
@@ -49,10 +52,10 @@ function RecipeDisplayPage(){
         <Typography>{recipe.title}</Typography>
         <Typography>{recipe.ingredients}</Typography>
         <Typography>{recipe.instructions}</Typography>
-        {/* <Switch /> */}
+        <Switch checked={checked} disabled/>
         </Card>
         {id<999 ? <Link to="EditPage" >EDIT!</Link>
- : <Button onClick={handleRecipeSubmit}>CREATE!</Button>}
+ : <Button onClick={handleRecipeSubmit}>SAVE!</Button>}
         </>
     )
 }

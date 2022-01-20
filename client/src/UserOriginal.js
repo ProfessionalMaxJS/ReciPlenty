@@ -12,27 +12,27 @@ function UserOriginal(){
   const [recipe, setRecipe] = useState({})
   const id = useParams().id
   // console.log(id)
+  const [checked, setChecked] = useState(false)
 
   useEffect(()=>{
     if(id){
       // console.log("elloGuvnah!")
       fetch(`/backend/saved_recipes/${id}`)
           .then(r=>r.json())
-          .then(d=>console.log(d.cooked_by_user))}
+          .then(d=>{setRecipe(d)
+                    setChecked(d.cooked_by_user)})}
   }, [id])
 
   const handleRecipeWrite = (e) =>{
     setRecipe({...recipe, [e.target.name]:e.target.value})
       // console.log(recipe)
     }
-    const [checked, setChecked] = useState(false)
     const handleSwitch = (e) => {
-      console.log(e.target.checked)
-    setChecked(!checked)
-    }
+      setChecked(!checked)
+      setRecipe({...recipe, cooked_by_user: !checked})
+  }
 
   const handleRecipeSubmit=(e)=>{
-
     setRecipe({...recipe, cooked_by_user: checked})
         fetch('/backend/add_user_recipe', {
             method: "POST",
@@ -46,14 +46,15 @@ function UserOriginal(){
               console.log(data);
             })
             .then(setRecipe({
-                title: "",
-                ingredients: "",
-                equipment: "",
-                instructions: ""
+              title: "",
+              ingredients: "",
+              equipment: "",
+              instructions: ""
             }))
     }
    
   const handleRecipePatch = () =>{
+    // console.log(recipe)
     fetch(`/backend/saved_recipes/${id}`, {
       method: "PATCH",
       headers: {
@@ -72,6 +73,9 @@ const handleRecipeDelete = () =>{
   fetch(`/backend/saved_recipes/${id}`, {
     method: "DELETE"
   })
+  .then(r=>r.json())
+  .then(d=>console.log(d))
+
   home("/")
 }
   

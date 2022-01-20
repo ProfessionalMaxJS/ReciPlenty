@@ -1,9 +1,9 @@
 import TextField from '@mui/material/TextField'
 // import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
+// import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
-import Container from '@mui/material/Container'
+// import Container from '@mui/material/Container'
 import {useState} from 'react'
 import Divider from '@mui/material/Divider'
 
@@ -26,7 +26,8 @@ function EntryPage(){
     })
       .then((r) => r.json())
       .then(d=>console.log(d))
-      .then(setNewBonaFides({name:"", password:"", password_confirmation:""}))}
+      .then(setNewBonaFides({name:"", password:"", password_confirmation:""}))
+  }
 
   function handleSignIn() {
     fetch("/backend/login", {
@@ -38,17 +39,17 @@ function EntryPage(){
     })
       .then((r) => r.json())
       .then(d=>console.log(d))
-      .then(setReturnBonaFides({name:"", password:""}))}
-      
-
+      .then(setReturnBonaFides({name:"", password:""}))
+  }
 
   function handleSignOut() {
     fetch("/backend/logout", {
       method: "DELETE",
     })
-    .then((r) => r.json())
+      .then((r) => r.json())
       .catch((err) => console.log(err))
-      .then((data) => console.log(data))}
+      .then((data) => console.log(data))
+  }
 
   // const Item = styled(Paper)(({ theme }) => ({
   //   ...theme.typography.body2,
@@ -88,4 +89,3 @@ function EntryPage(){
 }
 
 export default EntryPage
-

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Box from '@mui/material/Box'
 import AppBar from '@mui/material/AppBar'
@@ -14,19 +14,18 @@ function NavBar({handleTrivia}){
 
   const elloGuvnah = () => {console.log("elloGuvnah!")}
 
-  const [loggedIn, setLoggedIn] = useState(false)
-  useEffect(()=>{
-    fetch("/backend/logged_in")
-    .then(r=>r.json())
-    .then(d=>setLoggedIn(d.logged_in))
-  }, [])
+  // const [loggedIn, setLoggedIn] = useState(false)
+  // useEffect(()=>{
+  //   fetch("/backend/logged_in")
+  //   .then(r=>r.json())
+  //   .then(d=>setLoggedIn(d.logged_in))
+  // }, [])
 
   const [state, setState] = React.useState({
     // left: false,
     right: false,
   });
-    
-    
+      
     const [recipes, setRecipes] = useState([])
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);    

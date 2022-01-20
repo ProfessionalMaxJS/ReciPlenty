@@ -3,9 +3,7 @@ class Backend::SavedRecipesController < ApplicationController
 
   # GET /saved_recipes
   def index
-    @saved_recipes = SavedRecipe.all
-
-    render json: @saved_recipes
+    render json: @current_user.saved_recipes.all
   end
 
   # GET /saved_recipes/1
@@ -14,8 +12,19 @@ class Backend::SavedRecipesController < ApplicationController
   end
 
   def user_create
-    user_create_params = saved_recipe_params.merge(:user_original? => true)
+    user_create_params = saved_recipe_params.merge(:user_id => @current_user.id, :user_original => true)
     @saved_recipe = SavedRecipe.new(user_create_params)
+
+    if @saved_recipe.save
+      render json: @saved_recipe, status: :created
+    else
+      render json: @saved_recipe.errors, status: :unprocessable_entity
+    end
+  end
+
+  def api_create
+    api_create_params = saved_recipe_params.merge(:user_id => @current_user.id, :user_original => false, :source_url => params[:source_url])
+    @saved_recipe = SavedRecipe.new(api_create_params)
 
     if @saved_recipe.save
       render json: @saved_recipe, status: :created
@@ -26,6 +35,7 @@ class Backend::SavedRecipesController < ApplicationController
 
   # PATCH/PUT /saved_recipes/1
   def update
+    # render json: @saved_recipe
     if @saved_recipe.update(saved_recipe_params)
       render json: @saved_recipe
     else
@@ -39,13 +49,13 @@ class Backend::SavedRecipesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+  #   # Use callbacks to share common setup or constraints between actions.
     def set_saved_recipe
       @saved_recipe = SavedRecipe.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def saved_recipe_params
-      params.require(:saved_recipe).permit(:title, :ingredients, :equipment, :instructions)
+      params.require(:saved_recipe).permit(:title, :ingredients, :instructions, :source_url, :cooked_by_user)
     end
 end

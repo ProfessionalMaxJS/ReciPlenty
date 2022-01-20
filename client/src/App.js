@@ -1,11 +1,13 @@
-import '@progress/kendo-theme-default/dist/all.css';  
 import './App.css'
-import {useNavigate} from 'react-router-dom'
 import {useState} from 'react'
 import NavBar from './NavBar';
 import TriviaCard from "./TriviaCard"
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, useNavigate, Link} from 'react-router-dom'
 import UserOriginal from "./UserOriginal"
+import RecipeDisplayPage from './RecipeDisplayPage';
+import EntryPage from './EntryPage'
+// import EditPage from './EditPage'
+
 function App() {
 
   const toTheCards = useNavigate()
@@ -24,7 +26,12 @@ function App() {
 <Routes>
   <Route path="/" element={<TriviaCard trivia={trivia}/>} />
   <Route path="/UserOriginal" element={<UserOriginal />} />
+  <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage /> } />
+  <Route path="/RecipeDisplayPage/:id/EditPage" element={<UserOriginal />} />
+  <Route path="/EntryPage" element={<EntryPage />} />
+  {/* <Route path="/EditPage" element={<EditPage />} /> */}
 </Routes>
+    <Link style={{position: "absolute", bottom: "12px", right: "50%", transform: "translate( 50%)"}} to="EntryPage">Log In or Sign Up!</Link>
     </>
  
  );

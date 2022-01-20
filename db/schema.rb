@@ -18,13 +18,14 @@ ActiveRecord::Schema.define(version: 2) do
   create_table "saved_recipes", force: :cascade do |t|
     t.text "title"
     t.text "ingredients"
-    t.text "equipment"
     t.text "instructions"
-    t.boolean "cooked_by_user?", default: false
-    t.boolean "user_original?"
-    t.string "original_url"
+    t.boolean "cooked_by_user", default: false
+    t.boolean "user_original"
+    t.string "source_url"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_saved_recipes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,4 +35,5 @@ ActiveRecord::Schema.define(version: 2) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "saved_recipes", "users"
 end

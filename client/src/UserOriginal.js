@@ -6,14 +6,28 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Switch from '@mui/material/Switch'
 
-function UserOriginal(){
-  const elloGuvnah = () => {console.log("elloGuvnah!")}
-
+function UserOriginal({loggedIn, setLoggedIn}){
+  
   const [recipe, setRecipe] = useState({})
   const id = useParams().id
+  useEffect(()=>{
+    fetch("/backend/logged_in")
+    .then(r=>r.json())
+    .then(d=>{console.log(d)
+      setLoggedIn(d.logged_in)})
+    }, [setLoggedIn])
+    
+  const toTheHouse = useNavigate()
+ 
+  if(id && loggedIn===false)
+    {toTheHouse("/")
+    alert("Sorry, you must be logged in to use this feature")}
+
+  const elloGuvnah = () => {console.log("elloGuvnah!")}
+  
   // console.log(id)
   const [checked, setChecked] = useState(false)
-
+  
   useEffect(()=>{
     if(id){
       // console.log("elloGuvnah!")
@@ -33,7 +47,8 @@ function UserOriginal(){
   }
 
   const handleRecipeSubmit=(e)=>{
-    setRecipe({...recipe, cooked_by_user: checked})
+    if(loggedIn)
+    {setRecipe({...recipe, cooked_by_user: checked})
         fetch('/backend/add_user_recipe', {
             method: "POST",
             headers: {
@@ -41,18 +56,21 @@ function UserOriginal(){
             },
             body: JSON.stringify(recipe),
           })
-            .then((r) => r.json())
-            .then((data) => {
-              console.log(data);
-            })
-            .then(setRecipe({
-              title: "",
-              ingredients: "",
-              equipment: "",
-              instructions: ""
-            }))
-    }
-   
+          .then((r) => r.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .then(setRecipe({
+            title: "",
+            ingredients: "",
+            equipment: "",
+            instructions: ""
+          }))
+          setChecked(false)}
+          else
+          {alert("Sorry, you must have an account to start writing recipes with us. Sign up today! (it's freeeee...)")}
+        }
+        
   const handleRecipePatch = () =>{
     // console.log(recipe)
     fetch(`/backend/saved_recipes/${id}`, {
@@ -66,22 +84,21 @@ function UserOriginal(){
       .then((data) => {
         console.log(data);
       })
-}
-
-const home = useNavigate()
-const handleRecipeDelete = () =>{
-  fetch(`/backend/saved_recipes/${id}`, {
-    method: "DELETE"
-  })
-  .then(r=>r.json())
-  .then(d=>console.log(d))
-
-  home("/")
-}
-  
-
-return(
-        <>
+    }
+    
+    // const home = useNavigate()
+    const handleRecipeDelete = () =>{
+      fetch(`/backend/saved_recipes/${id}`, {
+        method: "DELETE"
+      })
+      .then(r=>r.json())
+      .then(d=>console.log(d))
+      toTheHouse("/")
+    }
+    
+    
+    return(
+      <>
         <Box style={{textAlign: "center"}} /*sx={{'& .MuiTextField-root': {  m: 1 },}}*/>
         <h1 style={{fontFamily: 'Alice, serif'}}>Add Your Recipe</h1>
         <TextField variant="filled" multiline style={{borderRadius: "10px", border: "5px solid blue", width: "90%"}} value={recipe.title} label="Title" required name="title" onChange={handleRecipeWrite}/>

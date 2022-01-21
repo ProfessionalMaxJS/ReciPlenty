@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useState, useEffect } from 'react'
+import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Box from '@mui/material/Box'
 import AppBar from '@mui/material/AppBar'
@@ -13,13 +13,6 @@ import TextField from '@mui/material/TextField'
 function NavBar({loggedIn}){
 
   const elloGuvnah = () => {console.log("elloGuvnah!")}
-
-  // const [loggedIn, setLoggedIn] = useState(false)
-  // useEffect(()=>{
-  //   fetch("/backend/logged_in")
-  //   .then(r=>r.json())
-  //   .then(d=>setLoggedIn(d.logged_in))
-  // }, [])
 
   const [state, setState] = React.useState({
     // left: false,
@@ -50,10 +43,7 @@ function NavBar({loggedIn}){
     
     const toTheEditor = useNavigate()
     const handleAddRecipe = () => {
-      if(loggedIn)
-      {toTheEditor("/UserOriginal")}
-      else
-      {alert("INTRUDERRRRRR!!!")}
+      toTheEditor("/UserOriginal")
     }
     
     const toggleDrawer = (anchor, open) => (event) => {
@@ -127,38 +117,3 @@ return(
 }
 
 export default NavBar;
-
-
-// const navTest = useNavigate()
-
-//   function handleSignIn() {
-//     fetch("/login", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(user),
-//     })
-//       .then((r) => r.json())
-//       .catch((err) => {
-//         console.log(err);
-//       })
-//       .then((data) => {
-//         if (data.error) {
-//           alert("Login Failed; Incorrect Name/Password Combination. Or Maye You Haven't Signed Up?")
-//           console.log(data.error);
-//         } else {
-//           setUserData(data);
-//           setIsLoggedIn(true);
-//           navTest("/Menu")
-//           console.log(data);
-//           setChange(Math.random());
-//         }
-//       })
-//       .then(
-//         setUser({
-//           name: "",
-//           password: "",
-//         })
-//       );
-//   }

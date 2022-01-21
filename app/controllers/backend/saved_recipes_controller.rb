@@ -1,5 +1,6 @@
 class Backend::SavedRecipesController < ApplicationController
   before_action :set_saved_recipe, only: [:show, :update, :destroy]
+  skip_before_action :authorize, only: [:show_all]
 
   # GET /saved_recipes
   def index
@@ -46,6 +47,10 @@ class Backend::SavedRecipesController < ApplicationController
   # DELETE /saved_recipes/1
   def destroy
     @saved_recipe.destroy
+  end
+
+  def show_all
+    render json: SavedRecipe.all, status: :ok
   end
 
   private

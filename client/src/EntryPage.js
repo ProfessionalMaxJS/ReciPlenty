@@ -1,15 +1,13 @@
 import TextField from '@mui/material/TextField'
 // import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-// import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
-// import Container from '@mui/material/Container'
 import {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+// import {useNavigate} from 'react-router-dom'
 import Divider from '@mui/material/Divider'
 import TriviaCard from './TriviaCard'
 
-function EntryPage(){
+function EntryPage({setLoggedIn}){
     
   const [newBonaFides, setNewBonaFides] = useState({})
   const handleNewBonaFides=(e)=>setNewBonaFides({...newBonaFides, [e.target.name]:e.target.value})
@@ -17,7 +15,7 @@ function EntryPage(){
   const [returnBonaFides, setReturnBonaFides] = useState({})
   const handleReturnBonaFides=(e)=>setReturnBonaFides({...returnBonaFides, [e.target.name]:e.target.value})
 
-  const toTheHouse = useNavigate()
+  // const toTheHouse = useNavigate()
   const handleSignUp=()=>{
     console.log(newBonaFides)
     fetch("/backend/signup", {
@@ -28,9 +26,10 @@ function EntryPage(){
       body: JSON.stringify(newBonaFides),
     })
       .then((r) => r.json())
-      .then(d=>console.log(d))
-      .then(setNewBonaFides({name:"", password:"", password_confirmation:""}))
-      .then(toTheHouse("/"))
+      .then(d=>{console.log(d)
+      setNewBonaFides({name:"", password:"", password_confirmation:""})
+             setLoggedIn(true)})
+      // .then(toTheHouse("/"))
   }
 
  
@@ -43,9 +42,10 @@ function EntryPage(){
       body: JSON.stringify(returnBonaFides),
     })
       .then((r) => r.json())
-      .then(d=>console.log(d))
-      .then(setReturnBonaFides({name:"", password:""}))
-      .then(toTheHouse("/"))
+      .then(d=>{console.log(d)
+            setReturnBonaFides({name:"", password:""})
+             setLoggedIn(true)})
+      // .then(toTheHouse("/"))
   }
 
   function handleSignOut() {
@@ -54,7 +54,8 @@ function EntryPage(){
     })
       .then((r) => r.json())
       .catch((err) => console.log(err))
-      .then((data) => console.log(data))
+      .then((data) => {console.log(data)
+                        setLoggedIn(false)})
   }
 
   // const Item = styled(Paper)(({ theme }) => ({

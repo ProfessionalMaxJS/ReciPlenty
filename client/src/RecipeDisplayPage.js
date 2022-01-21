@@ -1,12 +1,26 @@
-import {useParams, Link} from 'react-router-dom'
+import {useParams, Link, useNavigate} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import Switch from '@mui/material/Switch'
 
-function RecipeDisplayPage(){
-    const elloGuvnah = () => {console.log("elloGuvnah!")}
+function RecipeDisplayPage({loggedIn, setLoggedIn}){
+
+  const elloGuvnah = () => {console.log("elloGuvnah!")}
+
+  useEffect(()=>{
+    fetch("/backend/logged_in")
+    .then(r=>r.json())
+    .then(d=>{console.log(d)
+      setLoggedIn(d.logged_in)})
+    }, [setLoggedIn])
+    
+  const toTheHouse = useNavigate()
+ 
+  if(loggedIn===false)
+    {toTheHouse("/")
+    alert("Sorry, you must be logged in to use this feature")}
 
     const id = useParams().id
     // console.log(id)

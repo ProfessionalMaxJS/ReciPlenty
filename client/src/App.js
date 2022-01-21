@@ -21,7 +21,7 @@ function App() {
     <>
       <NavBar loggedIn={loggedIn} />
 <Routes>
-  <Route path="/" element={<EntryPage setLoggedIn={setLoggedIn} />} />
+  <Route path="/" element={<EntryPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
   <Route path="/UserOriginal" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
   <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> } />
   <Route path="/RecipeDisplayPage/:id/EditPage" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />

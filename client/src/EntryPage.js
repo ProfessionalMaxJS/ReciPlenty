@@ -7,7 +7,7 @@ import {useState} from 'react'
 import Divider from '@mui/material/Divider'
 import TriviaCard from './TriviaCard'
 
-function EntryPage({setLoggedIn}){
+function EntryPage({loggedIn, setLoggedIn}){
     
   const [newBonaFides, setNewBonaFides] = useState({})
   const handleNewBonaFides=(e)=>setNewBonaFides({...newBonaFides, [e.target.name]:e.target.value})
@@ -27,8 +27,13 @@ function EntryPage({setLoggedIn}){
     })
       .then((r) => r.json())
       .then(d=>{console.log(d)
-      setNewBonaFides({name:"", password:"", password_confirmation:""})
-             setLoggedIn(true)})
+        if(d.error)
+          {let newStr=(d.exception).slice(31,-1)
+            alert(newStr)}
+        else
+          {setNewBonaFides({name:"", password:"", password_confirmation:""})
+          setLoggedIn(true)}
+            })
       // .then(toTheHouse("/"))
   }
 
@@ -43,8 +48,12 @@ function EntryPage({setLoggedIn}){
     })
       .then((r) => r.json())
       .then(d=>{console.log(d)
-            setReturnBonaFides({name:"", password:""})
-             setLoggedIn(true)})
+                if (d.error)
+              {alert(d.error)}
+                else
+              {setReturnBonaFides({name:"", password:""})
+              setLoggedIn(true)}
+            })
       // .then(toTheHouse("/"))
   }
 
@@ -100,7 +109,9 @@ function EntryPage({setLoggedIn}){
         <TextField onChange={handleReturnBonaFides} name="password" type="password" value={returnBonaFides.password}/>
         <Button onClick={handleSignIn}>SIGN IN</Button>
         </Stack>
+        {loggedIn ? 
         <Button onClick={handleSignOut}>SIGN OUT</Button>
+        : null }
         </div>
         </>
     )

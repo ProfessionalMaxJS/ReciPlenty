@@ -14,13 +14,13 @@ class Backend::SavedRecipesController < ApplicationController
 
   def user_create
     user_create_params = saved_recipe_params.merge(:user_id => @current_user.id, :user_original => true)
-    @saved_recipe = SavedRecipe.new(user_create_params)
+    @saved_recipe = SavedRecipe.create!(user_create_params)
 
-    if @saved_recipe.save
+    # if @saved_recipe.save
       render json: @saved_recipe, status: :created
-    else
-      render json: @saved_recipe.errors, status: :unprocessable_entity
-    end
+    # else
+    #   render json: @saved_recipe., status: :unprocessable_entity
+    # end
   end
 
   def api_create

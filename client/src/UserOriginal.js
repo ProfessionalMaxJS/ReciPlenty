@@ -46,31 +46,36 @@ function UserOriginal({loggedIn, setLoggedIn}){
       setRecipe({...recipe, cooked_by_user: !checked})
   }
 
-  const handleRecipeSubmit=(e)=>{
-    if(loggedIn)
+  const handleRecipeSubmit=()=>{
+    if(loggedIn) 
     {setRecipe({...recipe, cooked_by_user: checked})
-        fetch('/backend/add_user_recipe', {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(recipe),
+    
+    fetch('/backend/add_user_recipe', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        },
+      body: JSON.stringify(recipe)
           })
-          .then((r) => r.json())
-          .then((data) => {
-            console.log(data);
-          })
-          .then(setRecipe({
-            title: "",
-            ingredients: "",
-            equipment: "",
-            instructions: ""
-          }))
-          setChecked(false)}
-          else
-          {alert("Sorry, you must have an account to start writing recipes with us. Sign up today! (it's freeeee...)")}
-        }
+      .then((r) => r.json())
+      .catch(err=>console.log(err))
+      .then(d => {console.log(d)
         
+            if(d.error)
+            {let newStr=((d.exception).slice(50,-1))
+            alert(newStr)}
+        
+            else
+            {
+            setRecipe({title: "", ingredients: "", equipment: "", instructions: ""})
+            setChecked(false)
+           }
+          })} 
+          else
+            {alert("Sorry, you must have an account to save recipes with us. Sign up today! (it's freeeee...)")}
+        }
+      
+                
   const handleRecipePatch = () =>{
     // console.log(recipe)
     fetch(`/backend/saved_recipes/${id}`, {

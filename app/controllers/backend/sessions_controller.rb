@@ -10,7 +10,7 @@ class Backend::SessionsController < ApplicationController
       # byebug
     render json: {user: user, session: session }, status: :ok
     else
-      render json: {error: "Unauthorized Access Attempted"}, status: :unauthorized
+      render json: {error: "Invalid Username or Password"}, status: :unauthorized
     end
   end
 

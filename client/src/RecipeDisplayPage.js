@@ -12,12 +12,12 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
 
   const elloGuvnah = () => {console.log("elloGuvnah!")}
 
-  useEffect(()=>{
-    fetch("/backend/logged_in")
-    .then(r=>r.json())
-    .then(d=>{console.log(d)
-      setLoggedIn(d.logged_in)})
-    }, [setLoggedIn])
+  // useEffect(()=>{
+  //   fetch("/backend/logged_in")
+  //   .then(r=>r.json())
+  //   .then(d=>{console.log(d)
+  //     setLoggedIn(d.logged_in)})
+  //   }, [setLoggedIn])
     
   const toTheHouse = useNavigate()
  
@@ -70,12 +70,12 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
         <>
         <Card sx={{ position: "relative", top: "12px", left: "50%", transform: "translate(-50%)",  maxWidth: 1000, textAlign: "center" }}>
         {id<999 ? <CardMedia component="img" height="350" image={foodPicUrl} alt={recipe.title} /> : <CardMedia component="img" height="350" image={recipe.api_img} alt={recipe.title} />}
-        <Typography style={{fontFamily: 'Lobster Two, cursive', fontWeight: "700", fontSize: "2.5em"}} >{recipe.title}</Typography>
-        <Typography style={{fontFamily: 'Alice, serif'}} ><span style={{fontFamily: 'Lobster Two, cursive', fontSize: "1.5em", fontWeight: "700"}} >Ingredients:</span> {recipe.ingredients}</Typography>
-        <Typography style={{fontFamily: 'Alice, serif'}}><span style={{fontFamily: 'Lobster Two, cursive', fontSize: "1.5em", fontWeight: "700"}}>Instructions:</span> {recipe.instructions}</Typography>
+        <Typography style={{fontFamily: 'Alice, cursive', fontWeight: "700", fontSize: "2.5em"}} >{recipe.title}</Typography>
+        <Typography style={{fontFamily: 'Alice, serif'}} ><span style={{fontFamily: 'Alice, cursive', fontSize: "1.5em", fontWeight: "700"}} >Ingredients:</span> {recipe.ingredients}</Typography>
+        <Typography style={{fontFamily: 'Alice, serif'}}><span style={{fontFamily: 'Alice, cursive', fontSize: "1.5em", fontWeight: "700"}}>Instructions:</span> {recipe.instructions}</Typography>
         {id<999 && <FormControlLabel disabled control={<Switch checked={checked}/>} label="Have you made this recipe before?" />}
         {id<999 ? <Link to="EditPage" >EDIT!</Link>
- : <Button onClick={handleRecipeSubmit}>SAVE!</Button>}
+ : <Button onClick={handleRecipeSubmit}>SAVE THIS RECIPE</Button>}
  </Card>
         </>
     )

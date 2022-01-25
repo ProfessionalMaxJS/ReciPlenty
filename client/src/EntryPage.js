@@ -57,24 +57,6 @@ function EntryPage({loggedIn, setLoggedIn}){
       // .then(toTheHouse("/"))
   }
 
-  function handleSignOut() {
-    fetch("/backend/logout", {
-      method: "DELETE",
-    })
-      .then((r) => r.json())
-      .catch((err) => console.log(err))
-      .then((data) => {console.log(data)
-                        setLoggedIn(false)})
-  }
-
-  // const Item = styled(Paper)(({ theme }) => ({
-  //   ...theme.typography.body2,
-  //   padding: theme.spacing(1),
-  //   textAlign: 'center',
-  //   color: theme.palette.text.secondary,
-  // }));
-
-  // const toTheCards = useNavigate()
   const [trivia, setTrivia] = useState("")
   const handleTrivia = () =>{
       fetch("https://api.spoonacular.com/food/trivia/random?apiKey=b5e32d122c6b42b69718e6565a960525")
@@ -89,9 +71,8 @@ function EntryPage({loggedIn, setLoggedIn}){
        <Button onClick={handleTrivia}>TRIVIA</Button>
         <TriviaCard trivia={trivia} />
         
-  {loggedIn ? 
-    <Button onClick={handleSignOut}>SIGN OUT</Button>
-:
+  {!loggedIn && 
+    
   <div>
     <Box sx={{
       padding: '20px 20px 20px 20px',

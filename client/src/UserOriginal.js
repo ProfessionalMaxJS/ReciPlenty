@@ -13,12 +13,13 @@ function UserOriginal({loggedIn, setLoggedIn}){
   const [pic, setPic] = useState(null)
   const [picName, setPicName] = useState("test")
   const id = useParams().id
-  useEffect(()=>{
-    fetch("/backend/logged_in")
-    .then(r=>r.json())
-    .then(d=>{console.log(d)
-      setLoggedIn(d.logged_in)})
-    }, [setLoggedIn])
+  
+  // useEffect(()=>{
+  //   fetch("/backend/logged_in")
+  //   .then(r=>r.json())
+  //   .then(d=>{console.log(d)
+  //     setLoggedIn(d.logged_in)})
+  //   }, [setLoggedIn])
     
   const toTheHouse = useNavigate()
   const toTheDisplay = useNavigate()
@@ -129,8 +130,8 @@ function UserOriginal({loggedIn, setLoggedIn}){
         <form>
         <input type="file" multiple={false} accept="image/*" onChange={handlePicAdd} label={picName} />
         </form>
-        {id ? <div> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipePatch}>SAVE!</Button> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipeDelete}>BALEETED!</Button> </div>
-        : <div><Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} onClick={handleRecipeSubmit} variant="contained">CREATE!</Button></div>}
+        {id ? <div> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipePatch}>SAVE CHANGES</Button> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipeDelete}>REMOVE FROM MY LIST</Button> </div>
+        : <div><Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} onClick={handleRecipeSubmit} variant="contained">CREATE</Button></div>}
     
         </>
     )

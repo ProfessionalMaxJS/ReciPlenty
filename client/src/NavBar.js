@@ -36,7 +36,7 @@ function NavBar({loggedIn}){
       .then(data=>setRecipes(data.results))
       .then(setAnchorEl(event.currentTarget));}
       else
-      {alert("INTRUDERRRRRR!!!")}
+      {alert("Sorry, you need to be logged in to use that feature.")}
     };
 
     const handleClose = () => {
@@ -60,7 +60,7 @@ function NavBar({loggedIn}){
         .then(r=>r.json())
         .then(d=>setRecipes(d))}
       else
-        {alert("INTRUDERRRRRR!!!")}
+        {alert("Sorry, you need to be logged in to use that feature.")}
 
     };
 
@@ -79,8 +79,7 @@ return(
          <button style={{ borderRadius: "25px", fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" ><SearchIcon /></button>
          </form>
         <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleAddRecipe}>Write Your Own</Button>
-        <p style={{fontSize: '3em', color: 'white', fontFamily: 'Lobster Two, cursive', fontWeight: '700'}} >ReciPlenty</p>
-        <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleHome}>Home</Button>
+        <p className="handy" onClick={handleHome} style={{fontSize: '3em', color: 'white', fontFamily: 'Lobster Two, cursive', fontWeight: '700'}} >ReciPlenty</p>
         <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>
       </Toolbar>
     </AppBar>

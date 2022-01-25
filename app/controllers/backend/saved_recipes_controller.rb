@@ -26,7 +26,7 @@ class Backend::SavedRecipesController < ApplicationController
   def api_create
     api_create_params = saved_recipe_params.merge(:user_id => @current_user.id, :user_original => false, :source_url => params[:source_url])
     @saved_recipe = SavedRecipe.new(api_create_params)
-
+    
     if @saved_recipe.save
       render json: @saved_recipe, status: :created
     else
@@ -61,6 +61,6 @@ class Backend::SavedRecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def saved_recipe_params
-      params.require(:saved_recipe).permit(:title, :ingredients, :instructions, :source_url, :cooked_by_user)
+      params.permit(:title, :ingredients, :instructions, :source_url, :cooked_by_user, :api_img, :pic)
     end
 end

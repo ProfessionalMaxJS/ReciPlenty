@@ -4,11 +4,14 @@ import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch'
 
 function UserOriginal({loggedIn, setLoggedIn}){
-  
+
   const [recipe, setRecipe] = useState({})
+  const [pic, setPic] = useState(null)
+  const [picName, setPicName] = useState("test")
   const id = useParams().id
   useEffect(()=>{
     fetch("/backend/logged_in")
@@ -18,6 +21,7 @@ function UserOriginal({loggedIn, setLoggedIn}){
     }, [setLoggedIn])
     
   const toTheHouse = useNavigate()
+  const toTheDisplay = useNavigate()
  
   if(id && loggedIn===false)
     {toTheHouse("/")
@@ -43,41 +47,45 @@ function UserOriginal({loggedIn, setLoggedIn}){
     }
     const handleSwitch = (e) => {
       setChecked(!checked)
+      // console.log(!checked)
       setRecipe({...recipe, cooked_by_user: !checked})
-  }
-
-  const handleRecipeSubmit=()=>{
-    if(loggedIn) 
-    {setRecipe({...recipe, cooked_by_user: checked})
+    }
     
+    const handleRecipeSubmit=()=>{
+      if(loggedIn) 
+     {const formy = new FormData()
+      formy.append('pic', pic)
+      formy.append('title', recipe.title)
+      formy.append('ingredients', recipe.ingredients)
+      formy.append('instructions', recipe.instructions)
+      formy.append('cooked_by_user', checked)
+
     fetch('/backend/add_user_recipe', {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        },
-      body: JSON.stringify(recipe)
+      body: formy
           })
       .then((r) => r.json())
       .catch(err=>console.log(err))
-      .then(d => {console.log(d)
-        
+     .then(d => {console.log(d)  
             if(d.error)
             {let newStr=((d.exception).slice(50,-1))
             alert(newStr)}
-        
             else
             {
             setRecipe({title: "", ingredients: "", equipment: "", instructions: ""})
+            setPicName(null)
             setChecked(false)
+            toTheDisplay(`/RecipeDisplayPage/${d.id}`)
            }
-          })} 
+          }) }
           else
             {alert("Sorry, you must have an account to save recipes with us. Sign up today! (it's freeeee...)")}
-        }
+          }
       
                 
   const handleRecipePatch = () =>{
     // console.log(recipe)
+
     fetch(`/backend/saved_recipes/${id}`, {
       method: "PATCH",
       headers: {
@@ -101,6 +109,10 @@ function UserOriginal({loggedIn, setLoggedIn}){
       toTheHouse("/")
     }
     
+    const handlePicAdd=(e)=>{
+      setPic(e.target.files[0])
+      setPicName(`${e.target.files[0]}`)
+    }
     
     return(
       <>
@@ -110,11 +122,16 @@ function UserOriginal({loggedIn, setLoggedIn}){
         <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", border: "5px solid blue", width: "90%"}} value={recipe.ingredients} label="Ingredients" name="ingredients" onChange={handleRecipeWrite}/>
         <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", border: "5px solid blue", width: "90%"}} value={recipe.instructions} label="Instructions" name="instructions" onChange={handleRecipeWrite}/>
 
-        <Switch onChange={handleSwitch} checked={checked}/>
+        <FormControlLabel control={<Switch checked={checked} onChange={handleSwitch}/>} label="Have you made this recipe before?" />
+        {/* <Switch onChange={handleSwitch} checked={checked}/> */}
         
-        {id ? <div> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipePatch}>EDIT!</Button> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipeDelete}>BALEETED!</Button> </div>
-        : <div><Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} onClick={handleRecipeSubmit} variant="contained">CREATE!</Button></div>}
         </Box>
+        <form>
+        <input type="file" multiple={false} accept="image/*" onChange={handlePicAdd} label={picName} />
+        </form>
+        {id ? <div> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipePatch}>SAVE!</Button> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipeDelete}>BALEETED!</Button> </div>
+        : <div><Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} onClick={handleRecipeSubmit} variant="contained">CREATE!</Button></div>}
+    
         </>
     )
 }

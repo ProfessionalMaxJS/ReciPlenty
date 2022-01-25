@@ -1,9 +1,9 @@
 import TextField from '@mui/material/TextField'
 // import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
 import {useState} from 'react'
 // import {useNavigate} from 'react-router-dom'
+import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import TriviaCard from './TriviaCard'
 
@@ -85,35 +85,42 @@ function EntryPage({loggedIn, setLoggedIn}){
 
     return(
         <>
-        <Button onClick={handleTrivia}>TRIVIA</Button>
+
+       <Button onClick={handleTrivia}>TRIVIA</Button>
         <TriviaCard trivia={trivia} />
-    <div
-      component="form"
-      // sx={{
-      //   '& .MuiTextField-root': { m: 1, width: '25ch' },
-      // }}
-      // noValidate
-      // autoComplete="off"
-    >
-          <Stack>
-        <TextField onChange={handleNewBonaFides} value={newBonaFides.name} name="name" />
-        <TextField onChange={handleNewBonaFides} type="password" value={newBonaFides.password} name="password"/>
-        <TextField onChange={handleNewBonaFides} type="password" value={newBonaFides.password_confirmation} name="password_confirmation"/>
-        <Button onClick={handleSignUp} > SIGN UP </Button>
-        </Stack>
-        <Divider orientation="vertical" />
-        {/* OR
-      </Divider> */}
-         <Stack>
-        <TextField onChange={handleReturnBonaFides} name="name" value={returnBonaFides.name}/>
-        <TextField onChange={handleReturnBonaFides} name="password" type="password" value={returnBonaFides.password}/>
-        <Button onClick={handleSignIn}>SIGN IN</Button>
-        </Stack>
-        {loggedIn ? 
-        <Button onClick={handleSignOut}>SIGN OUT</Button>
-        : null }
-        </div>
-        </>
+        
+  {loggedIn ? 
+    <Button onClick={handleSignOut}>SIGN OUT</Button>
+:
+  <div>
+    <Box sx={{
+      padding: '20px 20px 20px 20px',
+      position: 'relative',
+      top: '12px',
+      display: 'flex',
+      alignItems: 'center',
+      border: (theme) => `1px solid ${theme.palette.divider}`,
+      bgcolor: 'background.paper',
+      color: 'text.secondary'}}>
+
+  <div style={{ textAlign: 'center', borderRadius: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+      <TextField style={{width:"100%"}} onChange={handleNewBonaFides} required value={newBonaFides.name} name="name" label="Username" />
+      <TextField style={{width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password} name="password" label="Password"/>
+      <TextField style={{width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password_confirmation} name="password_confirmation" label="Password Confirmation"/>
+      <Button style={{fontFamily: 'Alice, serif'}} variant="contained" onClick={handleSignUp} > SIGN UP </Button>
+    </div>
+      <Divider style={{fontFamily: 'Alice, serif'}} orientation="vertical" flexItem variant="middle">
+        OR
+      </Divider>
+      <div style={{ textAlign: 'center', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
+      <TextField style={{width:"100%"}} onChange={handleReturnBonaFides} required label="Username" name="name" value={returnBonaFides.name}/>
+      <TextField style={{width:"100%"}} onChange={handleReturnBonaFides} required label="Password" name="password" type="password" value={returnBonaFides.password}/>
+      <Button style={{fontFamily: 'Alice, serif'}} variant="contained" onClick={handleSignIn}>SIGN IN</Button>
+      </div>
+      </Box>
+      </div>}
+        
+          </>
     )
 }
 

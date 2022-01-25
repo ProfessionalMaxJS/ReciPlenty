@@ -2,8 +2,11 @@ import {useParams, Link, useNavigate} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
+import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch'
+
 
 function RecipeDisplayPage({loggedIn, setLoggedIn}){
 
@@ -26,6 +29,7 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
     // console.log(id)
     const [checked, setChecked] = useState(false)    
     const [recipe, setRecipe] = useState({})
+    const [foodPicUrl, setFoodPicUrl] = useState("")
 
     useEffect (()=>{
         if (id>999)
@@ -33,15 +37,17 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
         .then(r=>r.json())
         .then(d=>{
             let newStr=""
-            // console.log(d)
-            d.extendedIngredients.map(eI=>newStr+=`${eI.name} \n`)
-            setRecipe({title: d.title, instructions: d.instructions, ingredients: newStr, userOriginal: false, source_url: d.sourceUrl})
+            console.log(d)
+            d.extendedIngredients.map(eI=>newStr+=`${eI.original}; \n`)
+            setRecipe({title: d.title, instructions: d.instructions, ingredients: newStr, userOriginal: false, source_url: d.sourceUrl, api_img: d.image})
         })}
         else
         {fetch(`/backend/saved_recipes/${id}`)
         .then(r=>r.json())
-        .then(d=>{setRecipe(d)
-                  setChecked(d.cooked_by_user)})}
+        .then(d=>{console.log(d)
+                  setRecipe(d)
+                  setChecked(d.cooked_by_user)
+                  setFoodPicUrl(d.food_pic.url)})}
     }, [id])
 
     const handleRecipeSubmit = () => {
@@ -62,14 +68,15 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
 
     return (
         <>
-        <Card>
-        <Typography>{recipe.title}</Typography>
-        <Typography>{recipe.ingredients}</Typography>
-        <Typography>{recipe.instructions}</Typography>
-        <Switch checked={checked} disabled/>
-        </Card>
+        <Card sx={{ position: "relative", top: "12px", left: "50%", transform: "translate(-50%)",  maxWidth: 1000, textAlign: "center" }}>
+        {id<999 ? <CardMedia component="img" height="350" image={foodPicUrl} alt={recipe.title} /> : <CardMedia component="img" height="350" image={recipe.api_img} alt={recipe.title} />}
+        <Typography style={{fontFamily: 'Lobster Two, cursive', fontWeight: "700", fontSize: "2.5em"}} >{recipe.title}</Typography>
+        <Typography style={{fontFamily: 'Alice, serif'}} ><span style={{fontFamily: 'Lobster Two, cursive', fontSize: "1.5em", fontWeight: "700"}} >Ingredients:</span> {recipe.ingredients}</Typography>
+        <Typography style={{fontFamily: 'Alice, serif'}}><span style={{fontFamily: 'Lobster Two, cursive', fontSize: "1.5em", fontWeight: "700"}}>Instructions:</span> {recipe.instructions}</Typography>
+        {id<999 && <FormControlLabel disabled control={<Switch checked={checked}/>} label="Have you made this recipe before?" />}
         {id<999 ? <Link to="EditPage" >EDIT!</Link>
  : <Button onClick={handleRecipeSubmit}>SAVE!</Button>}
+ </Card>
         </>
     )
 }

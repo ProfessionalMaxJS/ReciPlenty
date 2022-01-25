@@ -6,10 +6,10 @@ def index
     render json: User.all, status: :ok
 end
 
-# def show
-#     user = User.find(session[:user_id])
-#     render json: user, status: :ok
-#   end
+def show
+    user = User.find(session[:user_id])
+    render json: user, status: :ok
+  end
 
   def create
     # byebug

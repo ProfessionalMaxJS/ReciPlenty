@@ -8,7 +8,9 @@ import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer'
 import RecipesList from './RecipesList'
 import Menu from '@mui/material/Menu'
-import TextField from '@mui/material/TextField'
+import SearchIcon from '@mui/icons-material/Search';
+// import FormGroup from '@mui/material/FormGroup';
+// import TextField from '@mui/material/TextField'
 
 function NavBar({loggedIn}){
 
@@ -27,6 +29,7 @@ function NavBar({loggedIn}){
     const handleSearch = (e) => {setSearch(e.target.value)}
 
     const handleSearchResults = (event) => {
+      event.preventDefault()
       if(loggedIn)
       {fetch(`https://api.spoonacular.com/recipes/searchComplex?query=${search}&number=5&instructionsRequired=true&apiKey=b5e32d122c6b42b69718e6565a960525`)
       .then(r=>r.json())
@@ -70,11 +73,13 @@ return(
   <>
   <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static">
-      <Toolbar style={{justifyContent: "space-between"}}>
-
-        <TextField style={{fontFamily: 'Alice, serif', color: "red", border: "1px solid white", borderRadius: "5px"}} placeholder="Find A Recipe..." value={search} onChange={handleSearch}/>
-         <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleSearchResults}>Search Results</Button>
+      <Toolbar style={{justifyContent: "space-around"}}>
+  <form onSubmit={handleSearchResults}>
+        <input type="text" style={{fontFamily: 'Alice, serif', border: "1px solid white", borderRadius: "5px"}} placeholder="Find A Recipe..." value={search} onChange={handleSearch}></input>
+         <button style={{ borderRadius: "25px", fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" ><SearchIcon /></button>
+         </form>
         <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleAddRecipe}>Write Your Own</Button>
+        <p style={{fontSize: '3em', color: 'white', fontFamily: 'Lobster Two, cursive', fontWeight: '700'}} >ReciPlenty</p>
         <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleHome}>Home</Button>
         <Button style={{ fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>
       </Toolbar>

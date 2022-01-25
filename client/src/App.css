@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Alice&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alice&family=Lobster+Two&display=swap');
 
 body{
     background-color: #E7EBF0
 }
 
-.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+/* .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
     background-color: blue;
     border: 1px solid red;
-}
+} */
 
 .handy {
     cursor: pointer;
@@ -15,3 +15,5 @@ body{
 
 * {
 }
+
+/* :wght@700 */

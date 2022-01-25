@@ -85,18 +85,18 @@ function EntryPage({loggedIn, setLoggedIn}){
       color: 'text.secondary'}}>
 
   <div style={{ textAlign: 'center', borderRadius: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-      <TextField style={{width:"100%"}} onChange={handleNewBonaFides} required value={newBonaFides.name} name="name" label="Username" />
-      <TextField style={{width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password} name="password" label="Password"/>
-      <TextField style={{width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password_confirmation} name="password_confirmation" label="Password Confirmation"/>
-      <Button style={{fontFamily: 'Alice, serif'}} variant="contained" onClick={handleSignUp} > SIGN UP </Button>
+      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required value={newBonaFides.name} name="name" label="Username" />
+      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password} name="password" label="Password"/>
+      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password_confirmation} name="password_confirmation" label="Password Confirmation"/>
+      <Button style={{margin: '3px 0px 3px 0px', fontFamily: 'Alice, serif'}} variant="contained" onClick={handleSignUp} > SIGN UP </Button>
     </div>
       <Divider style={{fontFamily: 'Alice, serif'}} orientation="vertical" flexItem variant="middle">
         OR
       </Divider>
       <div style={{ textAlign: 'center', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
-      <TextField style={{width:"100%"}} onChange={handleReturnBonaFides} required label="Username" name="name" value={returnBonaFides.name}/>
-      <TextField style={{width:"100%"}} onChange={handleReturnBonaFides} required label="Password" name="password" type="password" value={returnBonaFides.password}/>
-      <Button style={{fontFamily: 'Alice, serif'}} variant="contained" onClick={handleSignIn}>SIGN IN</Button>
+      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleReturnBonaFides} required label="Username" name="name" value={returnBonaFides.name}/>
+      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleReturnBonaFides} required label="Password" name="password" type="password" value={returnBonaFides.password}/>
+      <Button style={{margin: '3px 0px 3px 0px', fontFamily: 'Alice, serif'}} variant="contained" onClick={handleSignIn}>SIGN IN</Button>
       </div>
       </Box>
       </div>}

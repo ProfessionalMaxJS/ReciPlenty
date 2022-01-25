@@ -9,6 +9,8 @@ import Switch from '@mui/material/Switch'
 
 function UserOriginal({loggedIn, setLoggedIn}){
 
+  // const elloGuvnah = () => {console.log("elloGuvnah!")}
+  
   const [recipe, setRecipe] = useState({})
   const [pic, setPic] = useState(null)
   const [picName, setPicName] = useState("test")
@@ -28,7 +30,6 @@ function UserOriginal({loggedIn, setLoggedIn}){
     {toTheHouse("/")
     alert("Sorry, you must be logged in to use this feature")}
 
-  const elloGuvnah = () => {console.log("elloGuvnah!")}
   
   // console.log(id)
   const [checked, setChecked] = useState(false)

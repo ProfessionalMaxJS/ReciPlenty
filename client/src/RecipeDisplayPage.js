@@ -10,7 +10,7 @@ import Switch from '@mui/material/Switch'
 
 function RecipeDisplayPage({loggedIn, setLoggedIn}){
 
-  const elloGuvnah = () => {console.log("elloGuvnah!")}
+  // const elloGuvnah = () => {console.log("elloGuvnah!")}
 
   // useEffect(()=>{
   //   fetch("/backend/logged_in")

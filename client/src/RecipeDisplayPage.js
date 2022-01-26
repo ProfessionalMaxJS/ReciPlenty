@@ -83,14 +83,14 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
 
     return (
         <>
-        <Card sx={{ position: "relative", top: "12px", left: "50%", transform: "translate(-50%)",  maxWidth: 1000, textAlign: "center" }}>
+        <Card sx={{ display: 'flex', flexDirection: 'column', position: "relative", top: "12px", boxShadow: "10px 10px #737578", marginBottom: '50px', border: '5px solid', borderColor:'#1976D2', borderRadius: '10px', left: "50%", transform: "translate(-50%)",  maxWidth: 1000, textAlign: "center" }}>
         {id<999 ? <CardMedia component="img" height="350" image={foodPicUrl} alt={recipe.title} /> : <CardMedia component="img" height="350" image={recipe.api_img} alt={recipe.title} />}
         <Typography style={{fontFamily: 'Alice, cursive', fontWeight: "700", fontSize: "2.5em"}} >{recipe.title}</Typography>
         <Typography style={{fontFamily: 'Alice, serif'}} ><span style={{fontFamily: 'Alice, cursive', fontSize: "1.5em", fontWeight: "700"}} >Ingredients:</span> {recipe.ingredients}</Typography>
         <Typography style={{fontFamily: 'Alice, serif'}}><span style={{fontFamily: 'Alice, cursive', fontSize: "1.5em", fontWeight: "700"}}>Instructions:</span> {recipe.instructions}</Typography>
-        {id<999 && <FormControlLabel control={<Switch onChange={handleSwitch} checked={checked}/>} label="Have you made this recipe before?" />}
-        {id<999 ? <Link to="EditPage" >EDIT!</Link>
- : <Button variant="contained" style={{fontFamily: 'Alice, serif', margin: "2px 0 8px"}} onClick={handleRecipeSubmit}>SAVE THIS RECIPE</Button>}
+        {id<999 && <FormControlLabel style={{justifyContent:'center', padding: '10px 0 10px'}} control={<Switch onChange={handleSwitch} checked={checked}/>} label="Have you made this recipe before?" />}
+        {id<999 ? <Link to="EditPage" style={{color:'white', background:'#1976D2', paddingTop: '5px'}} >EDIT!</Link>
+ : <Button variant="contained" style={{fontFamily: 'Alice, serif', marginTop: "2px"}} onClick={handleRecipeSubmit}>SAVE THIS RECIPE</Button>}
  </Card>
         </>
     )

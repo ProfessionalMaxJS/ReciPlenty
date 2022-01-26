@@ -8,9 +8,10 @@ import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer'
 import RecipesList from './RecipesList'
 import Menu from '@mui/material/Menu'
+import Divider from '@mui/material/Divider'
 import SearchIcon from '@mui/icons-material/Search';
 
-function NavBar({loggedIn}){
+function NavBar({loggedIn, setLoggedIn}){
 
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
 
@@ -67,6 +68,16 @@ function NavBar({loggedIn}){
       toTheHouse("/")
     }
 
+    function handleSignOut() {
+      fetch("/backend/logout", {
+        method: "DELETE",
+      })
+        .then((r) => r.json())
+        .catch((err) => console.log(err))
+        .then((data) => {console.log(data)
+                          setLoggedIn(false)})
+    }
+
 return(
   <>
 
@@ -74,7 +85,7 @@ return(
     <AppBar  position="static">
       <Toolbar style={{justifyContent: "space-between", padding: "10px"}} >
 
-  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'left'}}>
+  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'left'}}>
 
   <form style={{display:'flex'}} onSubmit={handleSearchResults}>
     
@@ -83,13 +94,24 @@ return(
     <button className="handy" style={{ marginLeft: '-10px', borderRadius: '4px', width: '60px', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" ><SearchIcon /></button>
   
   </form>
+      <Divider style={{fontFamily: 'Alice, serif'}} orientation="vertical" flexItem variant="middle">
+        OR
+      </Divider>
 
-    <Button style={{ margin: '5px 0 0 10px', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleAddRecipe}>Write Your Own</Button>
+    <Button style={{  border: "2px solid black", marginTop: '5px', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "6px 6px"}} variant="outlined" onClick={handleAddRecipe}>Write Your Own</Button>
 
   </div>
 
         <p className="handy" onClick={handleHome} style={{ position:'absolute', left:'50%', transform: 'translateX(-50%)', fontSize: '4em', color: 'white', fontFamily: 'Lobster Two, cursive', fontWeight: '700'}} >ReciPlenty</p>
-        <Button style={{ justifyContent: 'right', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>
+
+  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'right'}}>
+        
+  <Button style={{ border: "2px solid black", height: '46px', justifyContent: 'right', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>
+
+  {loggedIn ? <Button variant="outlined" style={{ border: "2px solid black", height: '46px', justifyContent: 'right', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px", marginLeft: '10px'}} onClick={handleSignOut}>SIGN OUT</Button> : <Button style={{ border: "2px solid black", height: '46px', justifyContent: 'right', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px", marginLeft: '10px'}} onClick={handleHome}>Log In or Sign Up!</Button> }
+        
+  </div>
+
       </Toolbar>
     </AppBar>
   </Box>

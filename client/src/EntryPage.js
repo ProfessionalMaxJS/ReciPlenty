@@ -95,7 +95,7 @@ function EntryPage({loggedIn, setLoggedIn}){
   .then(d=>{console.log(d)
             setBlog(d.recipes[0].creditsText)
             let setup=d.recipes[0].sourceUrl.split(".com")
-            setSource(setup[0])
+            setSource(`${setup[0]}.com`)
   })
 
   fetch("https://foodish-api.herokuapp.com/api")
@@ -108,11 +108,9 @@ function EntryPage({loggedIn, setLoggedIn}){
   fetch("https://api.punkapi.com/v2/beers/random")
   .then(r=>r.json())
   .then(d=>{console.log(d)
-        console.log(d[0].tagline)
-        let beerStr = d[0].tagline.toString().slice(0,-1)
-        let newStr = `Try ${beerStr} with `
-        d[0].food_pairing.map(fp=>newStr+=`${fp}, `)
-        let newNewStr = `${newStr.slice(0,-2)}...`
+        let newStr = `Try the beer "${d[0].tagline.toString().slice(0,-1)}" alongside `
+        d[0].food_pairing.map(fp=>newStr+=`${fp}, or `)
+        let newNewStr = `${newStr.slice(0,-5)}...`
         setPair(newNewStr)})
 
   fetch("https://foodish-api.herokuapp.com/api")
@@ -123,13 +121,15 @@ function EntryPage({loggedIn, setLoggedIn}){
         <>
 
   {!loggedIn &&   
-  <div>
+  <div >
     <Box sx={{
       padding: '20px 20px 20px 20px',
       position: 'relative',
       top: '12px',
       display: 'flex',
+      flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
       border: (theme) => `1px solid ${theme.palette.divider}`,
       bgcolor: 'background.paper',
       color: 'text.secondary'}}>
@@ -153,23 +153,24 @@ function EntryPage({loggedIn, setLoggedIn}){
 
     <div style={{textAlign: 'center', fontFamily: 'Alice, serif'}} >
     <h1 >Welcome to ReciPlenty, a place for all the best food ideas to mingle...</h1>
-    <p >Here, you can note down your best new ideas, or look up recipes for foods you've always wanted to try. But while you're, here, you can also:</p>
+    <p >On this page, you can note down your best new ideas, or look up recipes for foods you've always wanted to try. But while you're, here, you can also:</p>
     </div>
-<div style={{height: "600px", display:'flex', flexDirection: 'row', alignItems: 'flex-start'}} >
-  <Card sx={{ maxWidth: 250, textAlign: "center" }}>
+<div style={{height: "600px", display:'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center'}} >
+  <Card sx={{ border: "1px solid black", boxShadow: "10px 10px #737578", maxWidth: 400, textAlign: "center" }}>
     <CardMedia component="img" height="150" image={img1Url} alt={img1Url} />
     <Typography style={{fontFamily: 'Alice, serif'}}>{trivia}</Typography>
-    <Button onClick={handleTrivia}>Click Here to Learn a Random Food Fact</Button>
+    <Button style={{fontFamily: 'Alice, serif', margin: '5px 2px 5px 2px'}} variant="contained" onClick={handleTrivia}>Click to Learn a Random Food Fact</Button>
   </Card>
-  <Card sx={{ alignSelf: 'center', maxWidth: 250, textAlign: "center" }}>
+  <Card sx={{ border: "1px solid black", boxShadow: "10px 10px #737578", alignSelf: 'center', maxWidth: 400, textAlign: "center" }}>
     <CardMedia component="img" height="150" image={img2Url} alt={img2Url} />
-    <a href={`${source}.com`} style={{fontFamily: 'Alice, serif'}}>{blog}</a>
-    <Button onClick={handleBlog}>Click Here for a Link to a Random Food Blog</Button>
+    <p style={{fontFamily: 'Alice, serif'}}>{blog}</p>
+    <a href={source} style={{fontFamily: 'Alice, serif'}}>{source}</a>
+    <Button style={{fontFamily: 'Alice, serif', margin: '5px 2px 5px 2px'}} variant="contained" onClick={handleBlog}>Click for a Link to a Random Food Blog</Button>
   </Card>
-  <Card sx={{ maxWidth: 250, textAlign: "center" }}>
+  <Card sx={{ border: "1px solid black", boxShadow: "10px 10px #737578", maxWidth: 400, textAlign: "center" }}>
     <CardMedia component="img" height="150" image={img3Url} alt={img3Url} />
     <Typography style={{fontFamily: 'Alice, serif'}}>{pair}</Typography>
-    <Button onClick={handlePairing}>Click Here for a Random Beer-Food Pairing</Button>
+    <Button style={{fontFamily: 'Alice, serif', margin: '5px 2px 5px 2px'}} variant="contained" onClick={handlePairing}>Click for a Random Beer-Food Pairing</Button>
   </Card>
 </div>
 

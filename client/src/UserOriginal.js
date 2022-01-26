@@ -81,7 +81,7 @@ function UserOriginal({loggedIn, setLoggedIn}){
            }
           }) }
           else
-            {alert("Sorry, you must have an account to save recipes with us. Sign up today! (it's freeeee...)")}
+            {alert("Sorry, you need to be logged in to use that feature.")}
           }
       
                 

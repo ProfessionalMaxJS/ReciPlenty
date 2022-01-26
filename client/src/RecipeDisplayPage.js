@@ -64,7 +64,22 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
             })
     }
 
-  // const [checked, setChecked] = useState(false)
+  const handleSwitch = (e) => {
+      setChecked(!checked)
+      // setRecipe({...recipe, cooked_by_user: !checked})
+
+      fetch(`/backend/saved_recipes/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({cooked_by_user: !checked}),
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          console.log(data);
+        })
+    }
 
     return (
         <>
@@ -73,9 +88,9 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
         <Typography style={{fontFamily: 'Alice, cursive', fontWeight: "700", fontSize: "2.5em"}} >{recipe.title}</Typography>
         <Typography style={{fontFamily: 'Alice, serif'}} ><span style={{fontFamily: 'Alice, cursive', fontSize: "1.5em", fontWeight: "700"}} >Ingredients:</span> {recipe.ingredients}</Typography>
         <Typography style={{fontFamily: 'Alice, serif'}}><span style={{fontFamily: 'Alice, cursive', fontSize: "1.5em", fontWeight: "700"}}>Instructions:</span> {recipe.instructions}</Typography>
-        {id<999 && <FormControlLabel disabled control={<Switch checked={checked}/>} label="Have you made this recipe before?" />}
+        {id<999 && <FormControlLabel control={<Switch onChange={handleSwitch} checked={checked}/>} label="Have you made this recipe before?" />}
         {id<999 ? <Link to="EditPage" >EDIT!</Link>
- : <Button onClick={handleRecipeSubmit}>SAVE THIS RECIPE</Button>}
+ : <Button variant="contained" style={{fontFamily: 'Alice, serif', margin: "2px 0 8px"}} onClick={handleRecipeSubmit}>SAVE THIS RECIPE</Button>}
  </Card>
         </>
     )

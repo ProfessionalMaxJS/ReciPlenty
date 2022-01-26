@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom'
 
 function RecipesList({recipes}){
 
-  const elloGuvnah = () => {console.log("elloGuvnah!")}
+  // const elloGuvnah = () => {console.log("elloGuvnah!")}
   const toThePage = useNavigate()
 
     const Item = styled(Paper)(({ theme }) => ({

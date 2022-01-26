@@ -9,8 +9,6 @@ import Drawer from '@mui/material/Drawer'
 import RecipesList from './RecipesList'
 import Menu from '@mui/material/Menu'
 import SearchIcon from '@mui/icons-material/Search';
-// import FormGroup from '@mui/material/FormGroup';
-// import TextField from '@mui/material/TextField'
 
 function NavBar({loggedIn}){
 
@@ -71,25 +69,24 @@ function NavBar({loggedIn}){
 
 return(
   <>
+
   <Box sx={{ flex: 'auto' }}>
     <AppBar  position="static">
-      <Toolbar style={{justifyContent: "space-between", padding: '10px'}} >
+      <Toolbar style={{justifyContent: "space-between", padding: "10px"}} >
 
-  <div style={{display: 'flex', justifyContent: 'left'}}>
+  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'left'}}>
 
   <form style={{display:'flex'}} onSubmit={handleSearchResults}>
     
-    <input type="text" style={{fontFamily: 'Alice, serif', border: "1px solid white", borderRadius: "5px", color: "black", boxShadow: "5px 5px"}} placeholder="Find A Recipe..." value={search} onChange={handleSearch}></input>
+    <input type="text" style={{fontFamily: 'Alice, serif', border: "2px solid black", borderRadius: "5px", color: "black", boxShadow: "5px 5px"}} placeholder="Find A Recipe..." value={search} onChange={handleSearch}></input>
     
-    <Button className="handy" style={{ borderRadius: "25px", width: '60px', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" ><SearchIcon /></Button>
+    <button className="handy" style={{ marginLeft: '-10px', borderRadius: '4px', width: '60px', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" ><SearchIcon /></button>
   
   </form>
 
-    <Button style={{ marginLeft: '10px', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleAddRecipe}>Write Your Own</Button>
-
+    <Button style={{ margin: '5px 0 0 10px', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={handleAddRecipe}>Write Your Own</Button>
 
   </div>
-
 
         <p className="handy" onClick={handleHome} style={{ position:'absolute', left:'50%', transform: 'translateX(-50%)', fontSize: '4em', color: 'white', fontFamily: 'Lobster Two, cursive', fontWeight: '700'}} >ReciPlenty</p>
         <Button style={{ justifyContent: 'right', fontFamily: 'Alice, serif', background: "white", color: "black", boxShadow: "5px 5px"}} variant="outlined" onClick={toggleDrawer('right', true)}>My Recipes</Button>

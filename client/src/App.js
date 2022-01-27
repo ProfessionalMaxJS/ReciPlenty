@@ -18,11 +18,6 @@ function App() {
               setLoggedIn(d.logged_in)})
   }, [])
 
-  // const toTheHouse = useNavigate()
-  // const handleSignIn = () =>{
-  //   toTheHouse("/")
-  // }
-
   // function handleSignOut() {
   //   fetch("/backend/logout", {
   //     method: "DELETE",
@@ -40,9 +35,9 @@ function App() {
  
   <Route path="/" element={<EntryPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
  
-  <Route path="/UserOriginal" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+  <Route path="/UserOriginal" element={<UserOriginal loggedIn={loggedIn} />} />
 
-  <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> } />
+  <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage  /> } />
   
   <Route path="/RecipeDisplayPage/:id/EditPage" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 

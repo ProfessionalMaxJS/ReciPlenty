@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch'
 
-function UserOriginal({loggedIn, setLoggedIn}){
+function UserOriginal({loggedIn}){
 
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
   
@@ -16,49 +16,47 @@ function UserOriginal({loggedIn, setLoggedIn}){
   const [picPreview, setPicPreview] = useState("")
   const id = useParams().id
   
-  // setLoggedIn(true)
-  // useEffect(()=>{
-  //   fetch("/backend/logged_in")
-  //   .then(r=>r.json())
-  //   .then(d=>{console.log(d)
-  //     setLoggedIn(d.logged_in)})
-  //   }, [setLoggedIn])
-    
   const toTheHouse = useNavigate()
   const toTheDisplay = useNavigate()
- 
-  if(loggedIn===false && id)
-    {toTheHouse("/")
-    alert("Sorry, you must be logged in to use this feature")}
-
-  
+    
   // console.log(id)
   const [checked, setChecked] = useState(false)
   
+  if(id)
+{  fetch("/backend/logged_in")
+    .then(r=>r.json())
+    .then(d=>{console.log(d)
+          if(d.logged_in===false)
+    {alert("Sorry, this Page is Only for Saved Recipes (a Feature only Available to Members Whov've Signed Up or Logged In)")
+      toTheHouse("/")}})}
+
   useEffect(()=>{
     if(id){
       // console.log("elloGuvnah!")
       fetch(`/backend/saved_recipes/${id}`)
-          .then(r=>r.json())
-          .then(d=>{//console.log(d) 
-                    setRecipe(d)
-                    setPicPreview(d.food_pic.url)
-                    setChecked(d.cooked_by_user)})}
-  }, [id])
-
-  const handleRecipeWrite = (e) =>{
-    setRecipe({...recipe, [e.target.name]:e.target.value})
-      // console.log(recipe)
-    }
-    const handleSwitch = (e) => {
-      setChecked(!checked)
-      // console.log(!checked)
-      setRecipe({...recipe, cooked_by_user: !checked})
-    }
+      .then(r=>r.json())
+      .then(d=>{//console.log(d) 
+        setRecipe(d)
+        setPicPreview(d.food_pic.url)
+        setChecked(d.cooked_by_user)})}
+      }, [id])
+      
+      const handleRecipeWrite = (e) =>{
+        setRecipe({...recipe, [e.target.name]:e.target.value})
+        // console.log(recipe)
+      }
+      const handleSwitch = (e) => {
+        setChecked(!checked)
+        // console.log(!checked)
+        setRecipe({...recipe, cooked_by_user: !checked})
+      }
+      
+  const handleRecipeSubmit=()=>{
+      
+  if(loggedIn===false)
+    {return alert("Sorry, you need to be logged in to use that feature.")}
     
-    const handleRecipeSubmit=()=>{
-      if(loggedIn) 
-     {const formy = new FormData()
+    const formy = new FormData()
       formy.append('pic', pic)
       formy.append('title', recipe.title)
       formy.append('ingredients', recipe.ingredients)
@@ -80,12 +78,8 @@ function UserOriginal({loggedIn, setLoggedIn}){
             setRecipe({title: "", ingredients: "", equipment: "", instructions: ""})
             setChecked(false)
             toTheDisplay(`/RecipeDisplayPage/${d.id}`)
-           }
-          }) }
-          else
-            {alert("Sorry, you need to be logged in to use that feature.")}
-          }
-      
+           }})
+          }       
                 
   const handleRecipePatch = () =>{
     // console.log(recipe)
@@ -139,10 +133,13 @@ function UserOriginal({loggedIn, setLoggedIn}){
         <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.ingredients} label="Ingredients" name="ingredients" onChange={handleRecipeWrite}/>
         <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.instructions} label="Instructions" name="instructions" onChange={handleRecipeWrite}/>
 
-        <FormControlLabel control={<Switch checked={checked} onChange={handleSwitch}/>} label="Have you made this recipe before?" />
-        
+        <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'row'}} >
+        <Switch onChange={handleSwitch} checked={checked}/> 
+        <p style={{fontFamily:'Alice, serif'}} > Have you made this recipe before?</p>
+        </div>
+
         <form>
-          {id ? <p /*style={{ fontFamily: ''}}*/ >Would you like to change the photo?</p> : <p>Would you like to add a photo?</p> }
+          <p style={{ fontFamily: 'Alice, serif'}}> {id ? "Would you like to change the photo?" : "Would you like to add a photo?"} </p>
         <input type="file" multiple={false} accept="image/*" onChange={handlePicAdd} />
         {id && <img style={{maxHeight:'150px'}} src={picPreview} alt={picPreview} />}
         </form>

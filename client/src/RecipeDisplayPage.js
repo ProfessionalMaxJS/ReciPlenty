@@ -7,47 +7,44 @@ import Typography from '@mui/material/Typography'
 import Switch from '@mui/material/Switch'
 
 
-function RecipeDisplayPage({loggedIn, setLoggedIn}){
+function RecipeDisplayPage(){
 
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
-
-  // setLoggedIn(true)
-  // useEffect(()=>{
-  //   fetch("/backend/logged_in")
-  //   .then(r=>r.json())
-  //   .then(d=>{console.log(d)
-  //     setLoggedIn(d.logged_in)})
-  //   }, [setLoggedIn])
-
   const toTheHouse = useNavigate()
+
+  useEffect(()=>{
+    fetch("/backend/logged_in")
+    .then(r=>r.json())
+    .then(d=>{console.log(d)
+     if(d.logged_in===false)
+     {toTheHouse("/")
+      alert("Sorry, this Page is Only for Saved Recipes (a Feature only Available to Members Whov've Signed Up or Logged In)")}})
+    }, [])
+
  
-  if(loggedIn===false)
-    {toTheHouse("/")
-    alert("Sorry, you must be logged in to use this feature")}
+  const id = useParams().id
+  // console.log(id)
+  const [checked, setChecked] = useState(false)    
+  const [recipe, setRecipe] = useState({})
+  const [foodPicUrl, setFoodPicUrl] = useState("")
 
-    const id = useParams().id
-    // console.log(id)
-    const [checked, setChecked] = useState(false)    
-    const [recipe, setRecipe] = useState({})
-    const [foodPicUrl, setFoodPicUrl] = useState("")
-
-    useEffect (()=>{
-        if (id>999)
-        {fetch(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=b5e32d122c6b42b69718e6565a960525`)
-        .then(r=>r.json())
-        .then(d=>{
-            let newStr=""
-            console.log(d)
-            d.extendedIngredients.map(eI=>newStr+=`${eI.original}; \n`)
-            setRecipe({title: d.title, instructions: d.instructions, ingredients: newStr, userOriginal: false, source_url: d.sourceUrl, api_img: d.image})
+  useEffect (()=>{
+    if (id>999)
+      {fetch(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=b5e32d122c6b42b69718e6565a960525`)
+      .then(r=>r.json())
+      .then(d=>{
+        let newStr=""
+          console.log(d)
+          d.extendedIngredients.map(eI=>newStr+=`${eI.original}; \n`)
+          setRecipe({title: d.title, instructions: d.instructions, ingredients: newStr, userOriginal: false, source_url: d.sourceUrl, api_img: d.image})
         })}
-        else
-        {fetch(`/backend/saved_recipes/${id}`)
-        .then(r=>r.json())
-        .then(d=>{//console.log(d)
-                  setRecipe(d)
-                  setChecked(d.cooked_by_user)
-                  setFoodPicUrl(d.food_pic.url)})}
+    else
+      {fetch(`/backend/saved_recipes/${id}`)
+      .then(r=>r.json())
+      .then(d=>{//console.log(d)
+            setRecipe(d)
+            setChecked(d.cooked_by_user)
+            setFoodPicUrl(d.food_pic.url)})}
     }, [id])
 
     const handleRecipeSubmit = () => {

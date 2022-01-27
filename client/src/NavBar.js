@@ -75,7 +75,8 @@ function NavBar({loggedIn, setLoggedIn}){
         .then((r) => r.json())
         .catch((err) => console.log(err))
         .then((data) => {console.log(data)
-                          setLoggedIn(false)})
+                          setLoggedIn(false)
+                        toTheHouse("/")})
     }
 
 return(

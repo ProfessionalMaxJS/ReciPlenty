@@ -155,13 +155,13 @@ function EntryPage({loggedIn, setLoggedIn}){
     <h1 >Welcome to ReciPlenty, a place for all the best food ideas to mingle...</h1>
     <p >On this page, you can note down your best new ideas, or look up recipes for foods you've always wanted to try. But while you're, here, you can also:</p>
     </div>
-<div style={{height: "600px", display:'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center'}} >
+<div style={{height: "400px", display:'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center'}} >
   <Card sx={{ border: "1px solid black", boxShadow: "10px 10px #737578", maxWidth: 400, textAlign: "center" }}>
     <CardMedia component="img" height="150" image={img1Url} alt={img1Url} />
     <Typography style={{fontFamily: 'Alice, serif'}}>{trivia}</Typography>
     <Button style={{fontFamily: 'Alice, serif', margin: '5px 2px 5px 2px'}} variant="contained" onClick={handleTrivia}>Click to Learn a Random Food Fact</Button>
   </Card>
-  <Card sx={{ border: "1px solid black", boxShadow: "10px 10px #737578", alignSelf: 'center', maxWidth: 400, textAlign: "center" }}>
+  <Card sx={{ border: "1px solid black", boxShadow: "10px 10px #737578", alignSelf: 'flex-end', maxWidth: 400, textAlign: "center" }}>
     <CardMedia component="img" height="150" image={img2Url} alt={img2Url} />
     <p style={{fontFamily: 'Alice, serif'}}>{blog}</p>
     <a href={source} style={{fontFamily: 'Alice, serif'}}>{source}</a>

@@ -16,6 +16,7 @@ function UserOriginal({loggedIn, setLoggedIn}){
   const [picPreview, setPicPreview] = useState("")
   const id = useParams().id
   
+  // setLoggedIn(true)
   // useEffect(()=>{
   //   fetch("/backend/logged_in")
   //   .then(r=>r.json())
@@ -62,7 +63,7 @@ function UserOriginal({loggedIn, setLoggedIn}){
       formy.append('title', recipe.title)
       formy.append('ingredients', recipe.ingredients)
       formy.append('instructions', recipe.instructions)
-      formy.append('cooked_by_user', checked)
+      formy.append('cooked_by_user', recipe.cooked_by_user)
 
     fetch('/backend/add_user_recipe', {
       method: "POST",
@@ -139,7 +140,6 @@ function UserOriginal({loggedIn, setLoggedIn}){
         <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.instructions} label="Instructions" name="instructions" onChange={handleRecipeWrite}/>
 
         <FormControlLabel control={<Switch checked={checked} onChange={handleSwitch}/>} label="Have you made this recipe before?" />
-        {/* <Switch onChange={handleSwitch} checked={checked}/> */}
         
         <form>
           {id ? <p /*style={{ fontFamily: ''}}*/ >Would you like to change the photo?</p> : <p>Would you like to add a photo?</p> }

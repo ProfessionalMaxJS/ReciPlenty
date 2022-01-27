@@ -4,7 +4,6 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch'
 
 
@@ -12,13 +11,14 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
 
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
 
+  // setLoggedIn(true)
   // useEffect(()=>{
   //   fetch("/backend/logged_in")
   //   .then(r=>r.json())
   //   .then(d=>{console.log(d)
   //     setLoggedIn(d.logged_in)})
   //   }, [setLoggedIn])
-    
+
   const toTheHouse = useNavigate()
  
   if(loggedIn===false)
@@ -44,7 +44,7 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
         else
         {fetch(`/backend/saved_recipes/${id}`)
         .then(r=>r.json())
-        .then(d=>{console.log(d)
+        .then(d=>{//console.log(d)
                   setRecipe(d)
                   setChecked(d.cooked_by_user)
                   setFoodPicUrl(d.food_pic.url)})}
@@ -84,11 +84,15 @@ function RecipeDisplayPage({loggedIn, setLoggedIn}){
     return (
         <>
         <Card sx={{ display: 'flex', flexDirection: 'column', position: "relative", top: "12px", boxShadow: "10px 10px #737578", marginBottom: '50px', border: '5px solid', borderColor:'#1976D2', borderRadius: '10px', left: "50%", transform: "translate(-50%)",  maxWidth: 1000, textAlign: "center" }}>
-        {id<999 ? <CardMedia component="img" height="350" image={foodPicUrl} alt={recipe.title} /> : <CardMedia component="img" height="350" image={recipe.api_img} alt={recipe.title} />}
-        <Typography style={{fontFamily: 'Alice, cursive', fontWeight: "700", fontSize: "2.5em"}} >{recipe.title}</Typography>
+        {id<999 && 
+        <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'row'}} >
+        <Switch onChange={handleSwitch} checked={checked}/> 
+        <p style={{fontFamily:'Alice, serif'}} > {checked ? "I HAVE Made this Recipe Already!" : "I HAVE NOT Made This Recipe (Yet?)"}</p>
+        </div>}
+        <CardMedia component="img" height="350" image={id<999 ? foodPicUrl : recipe.api_img} alt={id<999 ? recipe.title : recipe.title} />
+        <Typography style={{fontFamily: 'Alice, serif', fontWeight: "700", fontSize: "2.5em"}} >{recipe.title}</Typography>
         <Typography style={{fontFamily: 'Alice, serif'}} ><span style={{fontFamily: 'Alice, cursive', fontSize: "1.5em", fontWeight: "700"}} >Ingredients:</span> {recipe.ingredients}</Typography>
         <Typography style={{fontFamily: 'Alice, serif'}}><span style={{fontFamily: 'Alice, cursive', fontSize: "1.5em", fontWeight: "700"}}>Instructions:</span> {recipe.instructions}</Typography>
-        {id<999 && <FormControlLabel style={{justifyContent:'center', padding: '10px 0 10px'}} control={<Switch onChange={handleSwitch} checked={checked}/>} label="Have you made this recipe before?" />}
         {id<999 ? <Link to="EditPage" style={{color:'white', background:'#1976D2', paddingTop: '5px'}} >EDIT!</Link>
  : <Button variant="contained" style={{fontFamily: 'Alice, serif', marginTop: "2px"}} onClick={handleRecipeSubmit}>SAVE THIS RECIPE</Button>}
  </Card>

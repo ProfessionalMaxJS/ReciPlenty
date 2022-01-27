@@ -37,10 +37,15 @@ function App() {
     <>
       <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
 <Routes>
+ 
   <Route path="/" element={<EntryPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+ 
   <Route path="/UserOriginal" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+
   <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> } />
+  
   <Route path="/RecipeDisplayPage/:id/EditPage" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+
 </Routes>
 
     {/* {loggedIn ? <Button variant="contained" style={{ fontFamily: 'Alice, serif', position: "absolute", bottom: "12px", right: "50%", transform: "translate( 50%)"}} onClick={handleSignOut}>SIGN OUT</Button> : <Button style={{ fontFamily: 'Alice, serif', position: "sticky", bottom: "12px", right: "50%", transform: "translate( 50%)"}} onClick={handleSignIn}>Log In or Sign Up!</Button>} */}

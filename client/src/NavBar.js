@@ -57,7 +57,7 @@ function NavBar({loggedIn, setLoggedIn}){
 
         fetch("/backend/saved_recipes")
         .then(r=>r.json())
-        .then(d=>setRecipes(d))}
+        .then(d=>{setRecipes(d)})}
       else
         {alert("Sorry, you need to be logged in to use that feature.")}
 

@@ -20,14 +20,15 @@ function UserOriginal({loggedIn}){
     
   // console.log(id)
   const [checked, setChecked] = useState(false)
-  
+
+useEffect(()=>{
   if(id)
 {  fetch("/backend/logged_in")
     .then(r=>r.json())
-    .then(d=>{console.log(d)
+    .then(d=>{//console.log(d)
           if(d.logged_in===false)
     {alert("Sorry, this Page is Only for Saved Recipes (a Feature only Available to Members Whov've Signed Up or Logged In)")
-      toTheHouse("/")}})}
+      toTheHouse("/")}})}}, [])
 
   useEffect(()=>{
     if(id){
@@ -90,8 +91,8 @@ function UserOriginal({loggedIn}){
     editedFormy.append('instructions', recipe.instructions)
     editedFormy.append('cooked_by_user', checked)
 
-  fetch('/backend/add_user_recipe', {
-    method: "POST",
+  fetch(`/backend/saved_recipes/${id}`, {
+    method: "PATCH",
     body: editedFormy
         })
     .then((r) => r.json())

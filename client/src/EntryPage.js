@@ -152,7 +152,7 @@ function EntryPage({loggedIn, setLoggedIn}){
 
     <div style={{textAlign: 'center', fontFamily: 'Alice, serif'}} >
     <h1 >Welcome to ReciPlenty, a place for all the best food ideas to mingle...</h1>
-    <p >On this page, you can note down your best new ideas, or look up recipes for foods you've always wanted to try. But while you're, here, you can also:</p>
+    <p >On this app, you can note down your best new ideas, or look up recipes for foods you've always wanted to try. But while you're, here, you can also:</p>
     </div>
 <div style={{height: "400px", display:'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center'}} >
   <Card sx={{ border: "1px solid black", boxShadow: "10px 10px #737578", maxWidth: 400, textAlign: "center" }}>

@@ -10,16 +10,15 @@ function UserOriginal({loggedIn}){
 
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
   
-  const [recipe, setRecipe] = useState({})
+  const [recipe, setRecipe] = useState({cooked_by_user: false})
   const [pic, setPic] = useState(null)
   const [picPreview, setPicPreview] = useState("")
   const id = useParams().id
-  
+  const [checked, setChecked] = useState(false)
   const toTheHouse = useNavigate()
   const toTheDisplay = useNavigate()
     
   // console.log(id)
-  const [checked, setChecked] = useState(false)
 
 useEffect(()=>{
   if(id)
@@ -57,11 +56,11 @@ useEffect(()=>{
     {return alert("Sorry, you need to be logged in to use that feature.")}
     
     const formy = new FormData()
-      formy.append('pic', pic)
-      formy.append('title', recipe.title)
-      formy.append('ingredients', recipe.ingredients)
-      formy.append('instructions', recipe.instructions)
-      formy.append('cooked_by_user', recipe.cooked_by_user)
+    pic &&  formy.append('pic', pic)
+    recipe.title &&  formy.append('title', recipe.title)
+    recipe.ingredients && formy.append('ingredients', recipe.ingredients)
+    recipe.instructions &&  formy.append('instructions', recipe.instructions)
+    formy.append('cooked_by_user', recipe.cooked_by_user)
 
     fetch('/backend/add_user_recipe', {
       method: "POST",
@@ -85,11 +84,11 @@ useEffect(()=>{
     // console.log(recipe)
 
     const editedFormy = new FormData()
-    editedFormy.append('pic', pic)
-    editedFormy.append('title', recipe.title)
-    editedFormy.append('ingredients', recipe.ingredients)
-    editedFormy.append('instructions', recipe.instructions)
-    editedFormy.append('cooked_by_user', checked)
+    pic && editedFormy.append('pic', pic)
+    recipe.title && editedFormy.append('title', recipe.title)
+    recipe.ingredients && editedFormy.append('ingredients', recipe.ingredients)
+    recipe.instructions && editedFormy.append('instructions', recipe.instructions)
+    editedFormy.append('cooked_by_user', recipe.cooked_by_user)
 
   fetch(`/backend/saved_recipes/${id}`, {
     method: "PATCH",

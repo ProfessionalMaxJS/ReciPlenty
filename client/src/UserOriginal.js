@@ -34,7 +34,7 @@ function UserOriginal({loggedIn}){
       // console.log("elloGuvnah!")
       fetch(`/backend/saved_recipes/${id}`)
       .then(r=>r.json())
-      .then(d=>{//console.log(d) 
+      .then(d=>{console.log(d) 
         setRecipe(d)
         setPicPreview(d.food_pic.url)
         setChecked(d.cooked_by_user)})}
@@ -120,8 +120,16 @@ function UserOriginal({loggedIn}){
     const handlePicAdd=(e)=>{
       setPic(e.target.files[0])
 
-      // const smallFormy = new FormData()
-      // smallFormy.append('pic', pic)
+      const smallFormy = new FormData()
+      smallFormy.append('pic', e.target.files[0])
+
+      fetch('/backend/generate_preview', {
+        method: "POST",
+        body: smallFormy
+            })
+        .then((r) => r.json())
+        .catch(err=>console.log(err))
+       .then(d => setPicPreview(d.preview_pic.url))
     }
     
     return(
@@ -140,7 +148,7 @@ function UserOriginal({loggedIn}){
         <form>
           <p style={{ fontFamily: 'Robot, sans-serif'}}> {id ? "Would you like to change the photo?" : "Would you like to add a photo?"} </p>
         <input type="file" multiple={false} accept="image/*" onChange={handlePicAdd} />
-        {id && <img style={{maxHeight:'150px'}} src={picPreview} alt={picPreview} />}
+        <img style={{maxHeight:'150px'}} src={picPreview} alt={picPreview} />
         </form>
         {id ? <div> <Button style={{marginTop: "12px", fontFamily: 'Robot, sans-serif'}} variant="contained" onClick={handleRecipePatch}>SAVE CHANGES</Button> <Button style={{marginTop: "12px", fontFamily: 'Robot, sans-serif'}} variant="contained" onClick={handleRecipeDelete}>REMOVE FROM MY LIST</Button> </div>
         : <div><Button style={{marginTop: "12px", fontFamily: 'Robot, sans-serif'}} onClick={handleRecipeSubmit} variant="contained">CREATE</Button></div>}

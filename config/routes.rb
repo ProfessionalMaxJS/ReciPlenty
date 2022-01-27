@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     delete "/logout", to: "sessions#destroy"   
     get "/logged_in", to: "sessions#show"
     get "/show_all", to: "saved_recipes#show_all"
+    post "/generate_preview", to: "previews#create"
+
   end
   
   # Routing logic: fallback requests for React Router.

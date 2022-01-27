@@ -127,23 +127,23 @@ function UserOriginal({loggedIn}){
     return(
       <>
         <Box style={{textAlign: "center", justifyContent: 'center'}} /*sx={{'& .MuiTextField-root': {  m: 1 },}}*/>
-        <h1 style={{fontFamily: 'Alice, serif'}}>Add Your Recipe</h1>
+        <h1 style={{fontFamily: 'Roboto, sans-serif', fontWeight:'1000'}}>Add Your Recipe</h1>
         <TextField variant="filled" multiline style={{borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.title} label="Title" required name="title" onChange={handleRecipeWrite}/>
         <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.ingredients} label="Ingredients" name="ingredients" onChange={handleRecipeWrite}/>
         <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.instructions} label="Instructions" name="instructions" onChange={handleRecipeWrite}/>
 
         <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'row'}} >
         <Switch onChange={handleSwitch} checked={checked}/> 
-        <p style={{fontFamily:'Alice, serif'}} > Have you made this recipe before?</p>
+        <p style={{fontFamily:'Robot, sans-serif'}} > Have you made this recipe before?</p>
         </div>
 
         <form>
-          <p style={{ fontFamily: 'Alice, serif'}}> {id ? "Would you like to change the photo?" : "Would you like to add a photo?"} </p>
+          <p style={{ fontFamily: 'Robot, sans-serif'}}> {id ? "Would you like to change the photo?" : "Would you like to add a photo?"} </p>
         <input type="file" multiple={false} accept="image/*" onChange={handlePicAdd} />
         {id && <img style={{maxHeight:'150px'}} src={picPreview} alt={picPreview} />}
         </form>
-        {id ? <div> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipePatch}>SAVE CHANGES</Button> <Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} variant="contained" onClick={handleRecipeDelete}>REMOVE FROM MY LIST</Button> </div>
-        : <div><Button style={{marginTop: "12px", fontFamily: 'Alice, serif'}} onClick={handleRecipeSubmit} variant="contained">CREATE</Button></div>}
+        {id ? <div> <Button style={{marginTop: "12px", fontFamily: 'Robot, sans-serif'}} variant="contained" onClick={handleRecipePatch}>SAVE CHANGES</Button> <Button style={{marginTop: "12px", fontFamily: 'Robot, sans-serif'}} variant="contained" onClick={handleRecipeDelete}>REMOVE FROM MY LIST</Button> </div>
+        : <div><Button style={{marginTop: "12px", fontFamily: 'Robot, sans-serif'}} onClick={handleRecipeSubmit} variant="contained">CREATE</Button></div>}
         </Box>
         </>
     )

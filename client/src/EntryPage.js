@@ -33,7 +33,6 @@ function EntryPage({loggedIn, setLoggedIn}){
 
   // const toTheHouse = useNavigate()
   const handleSignUp=()=>{
-    console.log(newBonaFides)
     fetch("/backend/signup", {
       method: "POST",
       headers: {

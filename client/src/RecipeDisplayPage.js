@@ -57,7 +57,11 @@ function RecipeDisplayPage(){
           })
             .then((r) => r.json())
             .then((data) => {
-              console.log(data);
+              console.log(data)
+              if(data.errors)
+              {alert(`Unable to save this recipe, ${data.errors[0]}`)}
+              else
+              {alert(`${data.title} Added to Your List`)}
             })
     }
 
@@ -74,7 +78,7 @@ function RecipeDisplayPage(){
       })
         .then((r) => r.json())
         .then((data) => {
-          console.log(data);
+          console.log(data)
         })
     }
 

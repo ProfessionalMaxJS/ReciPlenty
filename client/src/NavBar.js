@@ -57,7 +57,8 @@ function NavBar({loggedIn, setLoggedIn}){
 
         fetch("/backend/saved_recipes")
         .then(r=>r.json())
-        .then(d=>{setRecipes(d)})}
+        .then(d=>{console.log(d)
+                setRecipes(d)})}
       else
         {alert("Sorry, you need to be logged in to use that feature.")}
 
@@ -128,7 +129,9 @@ return(
       open={state[anchor]}
       onClose={toggleDrawer(anchor, false)}
       >
-    <RecipesList recipes={recipes}/>
+
+    {recipes.length ? <RecipesList recipes={recipes}/> : <p style={{fontFamily: 'Alice, serif'}} >Save Recipes from the Search Bar or the <br /> Text Editor and They'll Display Here!</p>}
+
     </Drawer>
     </React.Fragment>
     ))}

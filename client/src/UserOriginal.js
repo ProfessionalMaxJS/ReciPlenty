@@ -4,7 +4,6 @@ import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch'
 
 function UserOriginal({loggedIn}){

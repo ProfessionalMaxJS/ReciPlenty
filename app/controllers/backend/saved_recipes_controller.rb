@@ -30,7 +30,7 @@ class Backend::SavedRecipesController < ApplicationController
     if @saved_recipe.save
       render json: @saved_recipe, status: :created
     else
-      render json: @saved_recipe.errors, status: :unprocessable_entity
+      render json: {errors: @saved_recipe.errors.full_messages}, status: :unprocessable_entity
     end
   end
 

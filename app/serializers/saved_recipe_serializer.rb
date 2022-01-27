@@ -5,6 +5,7 @@ class SavedRecipeSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
   def food_pic
+    # byebug
     if object.pic.attached?
       {
         url: rails_blob_url(object.pic)

@@ -13,6 +13,7 @@ class Backend::SavedRecipesController < ApplicationController
   end
 
   def user_create
+    Preview.destroy_all
     user_create_params = saved_recipe_params.merge(:user_id => @current_user.id, :user_original => true)
     @saved_recipe = SavedRecipe.create!(user_create_params)
 

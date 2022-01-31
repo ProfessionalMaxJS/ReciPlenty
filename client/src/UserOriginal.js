@@ -34,7 +34,7 @@ useEffect(()=>{
       // console.log("elloGuvnah!")
       fetch(`/backend/saved_recipes/${id}`)
       .then(r=>r.json())
-      .then(d=>{console.log(d) 
+      .then(d=>{//console.log(d) 
         setRecipe(d)
         setPicPreview(d.food_pic.url)
         setChecked(d.cooked_by_user)})}
@@ -67,8 +67,8 @@ useEffect(()=>{
       body: formy
           })
       .then((r) => r.json())
-      .catch(err=>console.log(err))
-     .then(d => {console.log(d)  
+      .catch(err=>alert(err))
+     .then(d => {//console.log(d)  
             if(d.error)
             {let newStr=((d.exception).slice(50,-1))
             alert(newStr)}
@@ -95,8 +95,8 @@ useEffect(()=>{
     body: editedFormy
         })
     .then((r) => r.json())
-    .catch(err=>console.log(err))
-   .then(d => {console.log(d)  
+    .catch(err=>alert(err))
+   .then(d => {//console.log(d)  
           if(d.error)
           {let newStr=((d.exception).slice(50,-1))
           alert(newStr)}
@@ -113,9 +113,9 @@ useEffect(()=>{
         method: "DELETE"
       })
       .then(r=>r.json())
-      .then(d=>console.log(d))
+      .then(d=>{//console.log(d))
       toTheHouse("/")
-    }
+    })}
     
     const handlePicAdd=(e)=>{
       setPic(e.target.files[0])
@@ -128,7 +128,7 @@ useEffect(()=>{
         body: smallFormy
             })
         .then((r) => r.json())
-        .catch(err=>console.log(err))
+        .catch(err=>alert(err))
        .then(d => setPicPreview(d.preview_pic.url))
     }
     

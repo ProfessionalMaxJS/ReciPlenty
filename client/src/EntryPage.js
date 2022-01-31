@@ -11,24 +11,24 @@ import Typography from '@mui/material/Typography'
 
 function EntryPage({loggedIn, setLoggedIn}){
 
-  useEffect(()=>{
-    fetch("https://foodish-api.herokuapp.com/api")
-    .then(r=>r.json())
-    .then(d=>setImg1Url(d.image))
+  // useEffect(()=>{
+  //   fetch("https://foodish-api.herokuapp.com/api")
+  //   .then(r=>r.json())
+  //   .then(d=>setImg1Url(d.image))
     
-    fetch("https://foodish-api.herokuapp.com/api")
-    .then(r=>r.json())
-    .then(d=>setImg2Url(d.image))
+  //   fetch("https://foodish-api.herokuapp.com/api")
+  //   .then(r=>r.json())
+  //   .then(d=>setImg2Url(d.image))
 
-    fetch("https://foodish-api.herokuapp.com/api")
-    .then(r=>r.json())
-    .then(d=>setImg3Url(d.image))
-  },[])
+  //   fetch("https://foodish-api.herokuapp.com/api")
+  //   .then(r=>r.json())
+  //   .then(d=>setImg3Url(d.image))
+  // },[])
     
-  const [newBonaFides, setNewBonaFides] = useState({})
+  const [newBonaFides, setNewBonaFides] = useState({name:"", password:"", password_confirmation:""})
   const handleNewBonaFides=(e)=>setNewBonaFides({...newBonaFides, [e.target.name]:e.target.value})
     
-  const [returnBonaFides, setReturnBonaFides] = useState({})
+  const [returnBonaFides, setReturnBonaFides] = useState({name:"", password:""})
   const handleReturnBonaFides=(e)=>setReturnBonaFides({...returnBonaFides, [e.target.name]:e.target.value})
 
   // const toTheHouse = useNavigate()
@@ -41,7 +41,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       body: JSON.stringify(newBonaFides),
     })
       .then((r) => r.json())
-      .then(d=>{console.log(d)
+      .then(d=>{//console.log(d)
         if(d.error)
           {let newStr=(d.exception).slice(31,-1)
             alert(newStr)}
@@ -62,7 +62,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       body: JSON.stringify(returnBonaFides),
     })
       .then((r) => r.json())
-      .then(d=>{console.log(d)
+      .then(d=>{//console.log(d)
                 if (d.error)
               {alert(d.error)}
                 else
@@ -80,9 +80,9 @@ function EntryPage({loggedIn, setLoggedIn}){
       .then(d=>setTrivia(d.text))
                 // toTheCards("/")})
 
-    fetch("https://foodish-api.herokuapp.com/api")
-    .then(r=>r.json())
-    .then(d=>setImg1Url(d.image))
+    // fetch("https://foodish-api.herokuapp.com/api")
+    // .then(r=>r.json())
+    // .then(d=>setImg1Url(d.image))
   }
 
   const [img2Url, setImg2Url] = useState("")
@@ -91,30 +91,32 @@ function EntryPage({loggedIn, setLoggedIn}){
   const handleBlog = () =>{
   fetch("https://api.spoonacular.com/recipes/random?number=1&tags=lunch&apiKey=b5e32d122c6b42b69718e6565a960525")
   .then(r=>r.json())
-  .then(d=>{console.log(d)
+  .then(d=>{//console.log(d)
             setBlog(d.recipes[0].creditsText)
             let setup=d.recipes[0].sourceUrl.split(".com")
             setSource(`${setup[0]}.com`)
   })
 
-  fetch("https://foodish-api.herokuapp.com/api")
-  .then(r=>r.json())
-  .then(d=>setImg2Url(d.image))}
+  // fetch("https://foodish-api.herokuapp.com/api")
+  // .then(r=>r.json())
+  // .then(d=>setImg2Url(d.image))
+}
 
   const [img3Url, setImg3Url] = useState("")
   const [pair, setPair] = useState("")
   const handlePairing = () =>{
   fetch("https://api.punkapi.com/v2/beers/random")
   .then(r=>r.json())
-  .then(d=>{console.log(d)
+  .then(d=>{//console.log(d)
         let newStr = `Try the beer "${d[0].tagline.toString().slice(0,-1)}" alongside `
         d[0].food_pairing.map(fp=>newStr+=`${fp}, or `)
         let newNewStr = `${newStr.slice(0,-5)}...`
         setPair(newNewStr)})
 
-  fetch("https://foodish-api.herokuapp.com/api")
-  .then(r=>r.json())
-  .then(d=>setImg3Url(d.image))}
+  // fetch("https://foodish-api.herokuapp.com/api")
+  // .then(r=>r.json())
+  // .then(d=>setImg3Url(d.image))
+}
   
     return(
         <>

@@ -15,7 +15,7 @@ function RecipeDisplayPage(){
   useEffect(()=>{
     fetch("/backend/logged_in")
     .then(r=>r.json())
-    .then(d=>{console.log(d)
+    .then(d=>{//console.log(d)
      if(d.logged_in===false)
      {toTheHouse("/")
       alert("Sorry, this Page is Only for Saved Recipes (a Feature only Available to Members Whov've Signed Up or Logged In)")}})
@@ -34,7 +34,7 @@ function RecipeDisplayPage(){
       .then(r=>r.json())
       .then(d=>{
         let newStr=""
-          console.log(d)
+          //console.log(d)
           d.extendedIngredients.map(eI=>newStr+=`${eI.original}; \n`)
           setRecipe({title: d.title, instructions: d.instructions, ingredients: newStr, userOriginal: false, source_url: d.sourceUrl, api_img: d.image})
         })}
@@ -57,7 +57,7 @@ function RecipeDisplayPage(){
           })
             .then((r) => r.json())
             .then((data) => {
-              console.log(data)
+              //console.log(data)
               if(data.errors)
               {alert(`Unable to save this recipe, ${data.errors[0]}`)}
               else
@@ -78,7 +78,7 @@ function RecipeDisplayPage(){
       })
         .then((r) => r.json())
         .then((data) => {
-          console.log(data)
+          //console.log(data)
         })
     }
 

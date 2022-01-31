@@ -57,7 +57,7 @@ function NavBar({loggedIn, setLoggedIn}){
 
         fetch("/backend/saved_recipes")
         .then(r=>r.json())
-        .then(d=>{console.log(d)
+        .then(d=>{//console.log(d)
                 setRecipes(d)})}
       else
         {alert("Sorry, you need to be logged in to use that feature.")}
@@ -74,8 +74,8 @@ function NavBar({loggedIn, setLoggedIn}){
         method: "DELETE",
       })
         .then((r) => r.json())
-        .catch((err) => console.log(err))
-        .then((data) => {console.log(data)
+        .catch((err) => alert(err))
+        .then((data) => {//console.log(data)
                           setLoggedIn(false)
                         toTheHouse("/")})
     }

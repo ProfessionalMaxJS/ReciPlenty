@@ -14,7 +14,7 @@ function App() {
   useEffect(()=>{
     fetch("/backend/logged_in")
     .then(r=>r.json())
-    .then(d=>{console.log(d)
+    .then(d=>{//console.log(d)
               setLoggedIn(d.logged_in)})
   }, [])
 

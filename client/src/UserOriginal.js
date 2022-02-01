@@ -10,7 +10,7 @@ function UserOriginal({loggedIn}){
 
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
   
-  const [recipe, setRecipe] = useState({cooked_by_user: false})
+  const [recipe, setRecipe] = useState({title:"", ingredients:"", instructions:"", cooked_by_user: false})
   const [pic, setPic] = useState(null)
   const [picPreview, setPicPreview] = useState("")
   const id = useParams().id
@@ -24,6 +24,7 @@ useEffect(()=>{
   if(id)
 {  fetch("/backend/logged_in")
     .then(r=>r.json())
+    .catch(err=>alert(err))
     .then(d=>{//console.log(d)
           if(d.logged_in===false)
     {alert("Sorry, this Page is Only for Saved Recipes (a Feature only Available to Members Whov've Signed Up or Logged In)")
@@ -34,6 +35,7 @@ useEffect(()=>{
       // console.log("elloGuvnah!")
       fetch(`/backend/saved_recipes/${id}`)
       .then(r=>r.json())
+      .catch(err=>alert(err))
       .then(d=>{//console.log(d) 
         setRecipe(d)
         setPicPreview(d.food_pic.url)
@@ -113,6 +115,7 @@ useEffect(()=>{
         method: "DELETE"
       })
       .then(r=>r.json())
+      .catch(err=>alert(err))
       .then(d=>{//console.log(d))
       toTheHouse("/")
     })}

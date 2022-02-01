@@ -43,7 +43,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       .then((r) => r.json())
       .catch(err=>alert(err))
       .then(d=>{//console.log(d)
-        if(d.error)
+        if(d.errors)
           {let newStr=(d.exception).slice(31,-1)
             alert(newStr)}
         else

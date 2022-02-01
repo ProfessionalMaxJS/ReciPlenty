@@ -40,7 +40,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       },
       body: JSON.stringify(newBonaFides),
     })
-      .then(r => r.json())
+      .then(r => r.text())
       .catch(err=>alert(err))
       .then(d=>{console.log(d)})
         // if(d.errors)

@@ -1,6 +1,6 @@
 class Backend::SavedRecipesController < ApplicationController
   before_action :set_saved_recipe, only: [:show, :update, :destroy]
-  skip_before_action :authorize, only: [:show_all]
+  skip_before_action :authorize, only: [:show_all, :destroy]
 
   # GET /saved_recipes
   def index

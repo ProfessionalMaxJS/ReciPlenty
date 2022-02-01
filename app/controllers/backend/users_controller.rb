@@ -7,8 +7,8 @@ def index
 end
 
 def show
-    user = User.find(session[:user_id])
-    render json: user, status: :ok
+    # user = User.find(session[:user_id])
+    render json: @current_user, status: :ok
 end
 
 # def create

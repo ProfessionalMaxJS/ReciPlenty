@@ -11,19 +11,19 @@ import Typography from '@mui/material/Typography'
 
 function EntryPage({loggedIn, setLoggedIn}){
 
-  // useEffect(()=>{
-  //   fetch("https://foodish-api.herokuapp.com/api")
-  //   .then(r=>r.json())
-  //   .then(d=>setImg1Url(d.image))
+  useEffect(()=>{
+    fetch("https://foodish-api.herokuapp.com/api")
+    .then(r=>r.json())
+    .then(d=>setImg1Url(d.image))
     
-  //   fetch("https://foodish-api.herokuapp.com/api")
-  //   .then(r=>r.json())
-  //   .then(d=>setImg2Url(d.image))
+    fetch("https://foodish-api.herokuapp.com/api")
+    .then(r=>r.json())
+    .then(d=>setImg2Url(d.image))
 
-  //   fetch("https://foodish-api.herokuapp.com/api")
-  //   .then(r=>r.json())
-  //   .then(d=>setImg3Url(d.image))
-  // },[])
+    fetch("https://foodish-api.herokuapp.com/api")
+    .then(r=>r.json())
+    .then(d=>setImg3Url(d.image))
+  },[])
     
   const [newBonaFides, setNewBonaFides] = useState({name:"", password:"", password_confirmation:""})
   const handleNewBonaFides=(e)=>setNewBonaFides({...newBonaFides, [e.target.name]:e.target.value})
@@ -38,7 +38,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newBonaFides)
+      body: JSON.stringify(newBonaFides),
     })
       .then(r => r.json())
       .catch(err=>alert(err))
@@ -82,9 +82,9 @@ function EntryPage({loggedIn, setLoggedIn}){
       .then(d=>setTrivia(d.text))
                 // toTheCards("/")})
 
-    // fetch("https://foodish-api.herokuapp.com/api")
-    // .then(r=>r.json())
-    // .then(d=>setImg1Url(d.image))
+    fetch("https://foodish-api.herokuapp.com/api")
+    .then(r=>r.json())
+    .then(d=>setImg1Url(d.image))
   }
 
   const [img2Url, setImg2Url] = useState("")
@@ -100,9 +100,9 @@ function EntryPage({loggedIn, setLoggedIn}){
             setSource(`${setup[0]}.com`)
   })
 
-  // fetch("https://foodish-api.herokuapp.com/api")
-  // .then(r=>r.json())
-  // .then(d=>setImg2Url(d.image))
+  fetch("https://foodish-api.herokuapp.com/api")
+  .then(r=>r.json())
+  .then(d=>setImg2Url(d.image))
 }
 
   const [img3Url, setImg3Url] = useState("")
@@ -117,9 +117,9 @@ function EntryPage({loggedIn, setLoggedIn}){
         let newNewStr = `${newStr.slice(0,-5)}...`
         setPair(newNewStr)})
 
-  // fetch("https://foodish-api.herokuapp.com/api")
-  // .then(r=>r.json())
-  // .then(d=>setImg3Url(d.image))
+  fetch("https://foodish-api.herokuapp.com/api")
+  .then(r=>r.json())
+  .then(d=>setImg3Url(d.image))
 }
   
     return(

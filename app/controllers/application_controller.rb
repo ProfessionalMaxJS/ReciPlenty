@@ -5,13 +5,13 @@ class ApplicationController < ActionController::API
   private
   
   def render_unprocessable_entity_response(exception)
-    render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
+    render json: { errors: "this is a public service announcement...with guitars!" }, status: :unprocessable_entity
   end
 
   def authorize
     @current_user = User.find(session[:user_id])
 
-    render json: { errors: exception.record.errors.full_messages }, status: :unauthorized unless @current_user
+    render json: { errors: "this is a public service announcement...with guitars!" }, status: :unauthorized unless @current_user
   end
 end
 

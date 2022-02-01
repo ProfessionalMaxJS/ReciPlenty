@@ -41,6 +41,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       body: JSON.stringify(newBonaFides),
     })
       .then((r) => r.json())
+      .catch(err=>alert(err))
       .then(d=>{//console.log(d)
         if(d.error)
           {let newStr=(d.exception).slice(31,-1)
@@ -62,6 +63,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       body: JSON.stringify(returnBonaFides),
     })
       .then((r) => r.json())
+      .catch(err=>alert(err))
       .then(d=>{//console.log(d)
                 if (d.error)
               {alert(d.error)}
@@ -91,6 +93,7 @@ function EntryPage({loggedIn, setLoggedIn}){
   const handleBlog = () =>{
   fetch("https://api.spoonacular.com/recipes/random?number=1&tags=lunch&apiKey=b5e32d122c6b42b69718e6565a960525")
   .then(r=>r.json())
+  .catch(err=>alert(err))
   .then(d=>{//console.log(d)
             setBlog(d.recipes[0].creditsText)
             let setup=d.recipes[0].sourceUrl.split(".com")
@@ -107,6 +110,7 @@ function EntryPage({loggedIn, setLoggedIn}){
   const handlePairing = () =>{
   fetch("https://api.punkapi.com/v2/beers/random")
   .then(r=>r.json())
+  .catch(err=>alert(err))
   .then(d=>{//console.log(d)
         let newStr = `Try the beer "${d[0].tagline.toString().slice(0,-1)}" alongside `
         d[0].food_pairing.map(fp=>newStr+=`${fp}, or `)

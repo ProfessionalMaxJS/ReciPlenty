@@ -9,14 +9,14 @@ end
 def show
     user = User.find(session[:user_id])
     render json: user, status: :ok
-  end
+end
 
-  def create
-    # byebug
-    new_user = User.create!(user_params)
-    session[:user_id] = new_user.id
-    # byebug
-    render json: new_user, status: :created 
+def create
+  # byebug
+  new_user = User.create!(user_params)
+  session[:user_id] = new_user.id
+  # byebug
+  render json: new_user, status: :created 
 end
 
 
@@ -25,6 +25,5 @@ private
 def user_params
     params.permit(:name, :password, :password_confirmation)
 end
-
 
 end

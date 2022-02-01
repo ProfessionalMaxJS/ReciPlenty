@@ -38,7 +38,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newBonaFides),
+      body: JSON.stringify(newBonaFides)
     })
       .then(r => r.json())
       .catch(err=>alert(err))

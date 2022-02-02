@@ -11,6 +11,7 @@ function RecipeDisplayPage(){
 
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
   const toTheHouse = useNavigate()
+  const toThePage = useNavigate()
 
   useEffect(()=>{
     fetch("/backend/logged_in")
@@ -61,7 +62,8 @@ function RecipeDisplayPage(){
               if(data.errors)
               {alert(`Unable to save this recipe, ${data.errors[0]}`)}
               else
-              {alert(`${data.title} Added to Your List`)}
+              {alert(`${data.title} Added to Your List`)
+              toThePage(`/RecipeDisplayPage/${data.id}`)}
             })
     }
 

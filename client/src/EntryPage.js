@@ -26,13 +26,54 @@ function EntryPage({loggedIn, setLoggedIn}){
   },[])
     
   const [newBonaFides, setNewBonaFides] = useState({name:"", password:"", password_confirmation:""})
-  const handleNewBonaFides=(e)=>setNewBonaFides({...newBonaFides, [e.target.name]:e.target.value})
+  const handleNewBonaFides=(e)=>{
+    setNewBFNameError(false)
+    setNewBFNameHelper("")
+    setNewBFPasswordError(false)
+    setNewBFPasswordHelper("")
+    setNewBFPasswordConfirmError(false)
+    setNewBFPasswordConfirmHelper("")
+    setNewBonaFides({...newBonaFides, [e.target.name]:e.target.value})}
     
   const [returnBonaFides, setReturnBonaFides] = useState({name:"", password:""})
-  const handleReturnBonaFides=(e)=>setReturnBonaFides({...returnBonaFides, [e.target.name]:e.target.value})
+  const handleReturnBonaFides=(e)=>{
+    setReturnBFNameError(false)
+    setReturnBFNameHelper("")
+    setReturnBFPasswordError(false)
+    setReturnBFPasswordHelper("")
+    setReturnBonaFides({...returnBonaFides, [e.target.name]:e.target.value})}
+
+  const [newBFNameError, setNewBFNameError] = useState(false)
+  const [newBFNameHelper, setNewBFNameHelper] = useState("")
+
+  const [newBFPasswordError, setNewBFPasswordError] = useState(false)
+  const [newBFPasswordHelper, setNewBFPasswordHelper] = useState("")
+
+  const [newBFPasswordConfirmError, setNewBFPasswordConfirmError] = useState(false)
+  const [newBFPasswordConfirmHelper, setNewBFPasswordConfirmHelper] = useState("")
+
+  const [returnBFNameError, setReturnBFNameError] = useState(false)
+  const [returnBFNameHelper, setReturnBFNameHelper] = useState("")
+
+  const [returnBFPasswordError, setReturnBFPasswordError] = useState(false)
+  const [returnBFPasswordHelper, setReturnBFPasswordHelper] = useState("")
 
   // const toTheHouse = useNavigate()
   const handleSignUp=()=>{
+
+    if(!newBonaFides.name){
+      setNewBFNameHelper("Field Cannot be left Blank")
+      return setNewBFNameError(true)
+    }
+    if(!newBonaFides.password){
+      setNewBFPasswordHelper(("Field Cannot be left Blank"))
+      return setNewBFPasswordError(true)
+    }
+    if(!newBonaFides.password_confirmation){
+      setNewBFPasswordConfirmHelper("Field Cannot be left Blank")
+      return setNewBFPasswordConfirmError(true)
+    }
+
     fetch("/backend/signup", {
       method: "POST",
       headers: {
@@ -44,8 +85,12 @@ function EntryPage({loggedIn, setLoggedIn}){
       .catch(err=>alert(err))
       .then(d=>{//console.log(d)
         if(d.error)
-          {let newStr=(d.exception).slice(31,-1)
-            alert(newStr)}
+          {setNewBFNameError(true)
+           setNewBFPasswordError(true)
+           setNewBFPasswordConfirmError(true)
+            let newStr=(d.exception).slice(31,-1)
+            // alert(newStr)}
+            setNewBFPasswordConfirmHelper(newStr)}
         else
           {setNewBonaFides({name:"", password:"", password_confirmation:""})
           setLoggedIn(true)}
@@ -55,6 +100,16 @@ function EntryPage({loggedIn, setLoggedIn}){
 
  
   function handleSignIn() {
+
+    if(!returnBonaFides.name){
+      setReturnBFNameHelper("Field Cannot be left Blank")
+      return setReturnBFNameError(true)
+    }
+    if(!returnBonaFides.password){
+      setReturnBFPasswordHelper("Field Cannot be left Blank")
+      return setReturnBFPasswordError(true)
+    }
+
     fetch("/backend/login", {
       method: "POST",
       headers: {
@@ -66,7 +121,10 @@ function EntryPage({loggedIn, setLoggedIn}){
       .catch(err=>alert(err))
       .then(d=>{//console.log(d)
                 if (d.error)
-              {alert(d.error)}
+              {setReturnBFNameError(true)
+               setReturnBFPasswordError(true)
+               setReturnBFPasswordHelper(d.error)}
+                // alert(d.error)}
                 else
               {setReturnBonaFides({name:"", password:""})
               setLoggedIn(true)}
@@ -140,17 +198,17 @@ function EntryPage({loggedIn, setLoggedIn}){
       color: 'text.secondary'}}>
 
   <div style={{ textAlign: 'center', borderRadius: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required value={newBonaFides.name} name="name" label="Username" />
-      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password} name="password" label="Password"/>
-      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password_confirmation} name="password_confirmation" label="Password Confirmation"/>
+      <TextField helperText={newBFNameHelper} error={newBFNameError} style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required value={newBonaFides.name} name="name" label="Username" />
+      <TextField helperText={newBFPasswordHelper} error={newBFPasswordError} style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password} name="password" label="Password"/>
+      <TextField helperText={newBFPasswordConfirmHelper} error={newBFPasswordConfirmError} style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleNewBonaFides} required type="password" value={newBonaFides.password_confirmation} name="password_confirmation" label="Password Confirmation"/>
       <Button style={{margin: '3px 0px 3px 0px', fontFamily: 'Alice, serif'}} variant="contained" onClick={handleSignUp} > SIGN UP </Button>
     </div>
       <Divider style={{fontFamily: 'Alice, serif'}} orientation="vertical" flexItem variant="middle">
         OR
       </Divider>
       <div style={{ textAlign: 'center', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}} >
-      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleReturnBonaFides} required label="Username" name="name" value={returnBonaFides.name}/>
-      <TextField style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleReturnBonaFides} required label="Password" name="password" type="password" value={returnBonaFides.password}/>
+      <TextField helperText={returnBFNameHelper} error={returnBFNameError} style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleReturnBonaFides} required label="Username" name="name" value={returnBonaFides.name}/>
+      <TextField helperText={returnBFPasswordHelper} error={returnBFPasswordError} style={{margin: '3px 0px 3px 0px', width:"100%"}} onChange={handleReturnBonaFides} required label="Password" name="password" type="password" value={returnBonaFides.password}/>
       <Button style={{margin: '3px 0px 3px 0px', fontFamily: 'Alice, serif'}} variant="contained" onClick={handleSignIn}>SIGN IN</Button>
       </div>
       </Box>

@@ -11,24 +11,22 @@ def show
     render json: @current_user, status: :ok
 end
 
-# def create
-#   # byebug
-#   new_user = User.create!(user_params)
-#   session[:user_id] = new_user.id
-#   # byebug
-#   render json: new_user, status: :created 
-# end
-
 def create
   # byebug
-  new_user = User.create!(user_params)
-    session[:user_id] = new_user.id
-  if new_user
-  render json: {user: new_user}, status: :created
-  else
-    render json: {errors: "Invalid Username or Password"}, status: :unauthorized
-  end
+  @new_user = User.create!(user_params)
+  session[:user_id] = @new_user.id
+  render json: @new_user, status: :created 
 end
+
+# def user_create
+#   @saved_recipe = SavedRecipe.create!(user_create_params)
+
+#   # if @saved_recipe.save
+#     render json: @saved_recipe, status: :created
+#   # else
+#   #   render json: @saved_recipe., status: :unprocessable_entity
+#   # end
+# end
 
 private
 

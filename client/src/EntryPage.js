@@ -42,14 +42,14 @@ function EntryPage({loggedIn, setLoggedIn}){
     })
       .then(r => r.json())
       .catch(err=>alert(err))
-      .then(d=>{console.log(d)})
-        // if(d.errors)
-        //   {let newStr=(d.exception).slice(31,-1)
-        //     alert(newStr)}
-        // else
-        //   {setNewBonaFides({name:"", password:"", password_confirmation:""})
-        //   setLoggedIn(true)}
-        //     })
+      .then(d=>{//console.log(d)
+        if(d.error)
+          {let newStr=(d.exception).slice(31,-1)
+            alert(newStr)}
+        else
+          {setNewBonaFides({name:"", password:"", password_confirmation:""})
+          setLoggedIn(true)}
+            })
       // .then(toTheHouse("/"))
   }
 

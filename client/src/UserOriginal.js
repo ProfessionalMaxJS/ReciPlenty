@@ -17,18 +17,31 @@ function UserOriginal({loggedIn}){
   const [checked, setChecked] = useState(false)
   const toTheHouse = useNavigate()
   const toTheDisplay = useNavigate()
+  const [titleError, setTitleError] = useState(false)
+  const [titleHelper, setTitleHelper] = useState("")
+  // const [recipeArray, setRecipeArray] = useState([])
     
   // console.log(id)
 
 useEffect(()=>{
   if(id)
-{  fetch("/backend/logged_in")
+  {fetch("/backend/logged_in")
     .then(r=>r.json())
     .catch(err=>alert(err))
     .then(d=>{//console.log(d)
           if(d.logged_in===false)
     {alert("Sorry, this Page is Only for Saved Recipes (a Feature only Available to Members Whov've Signed Up or Logged In)")
-      toTheHouse("/")}})}}, [])
+      return toTheHouse("/")}})}
+    
+    // fetch("/backend/saved_recipes")
+    // .then(r=>r.json())
+    // .catch(err=>alert(err))
+    // .then(d=>{//console.log(d)
+    //   d.map(rA=>setRecipeArray([...recipeArray, recipeArray.push(rA.title)]))
+    //   // console.log(recipeArray)
+    // })
+    
+    }, [])
 
   useEffect(()=>{
     if(id){
@@ -53,15 +66,20 @@ useEffect(()=>{
       }
       
   const handleRecipeSubmit=()=>{
-      
-  if(loggedIn===false)
-    {return alert("Sorry, you need to be logged in to use that feature.")}
+    
+    if(loggedIn===false){
+    return alert("Sorry, you need to be logged in to use this feature.")
+    }
+  else if(!recipe.title) {
+    setTitleError(true)
+    return setTitleHelper("Every Recipe Must Have a Unique Title")
+  }
     
     const formy = new FormData()
-    pic &&  formy.append('pic', pic)
-    recipe.title &&  formy.append('title', recipe.title)
+    pic && formy.append('pic', pic)
+    recipe.title && formy.append('title', recipe.title)
     recipe.ingredients && formy.append('ingredients', recipe.ingredients)
-    recipe.instructions &&  formy.append('instructions', recipe.instructions)
+    recipe.instructions && formy.append('instructions', recipe.instructions)
     formy.append('cooked_by_user', recipe.cooked_by_user)
 
     fetch('/backend/add_user_recipe', {
@@ -139,9 +157,9 @@ useEffect(()=>{
       <>
         <Box style={{textAlign: "center", justifyContent: 'center'}} /*sx={{'& .MuiTextField-root': {  m: 1 },}}*/>
         <h1 style={{fontFamily: 'Roboto, sans-serif', fontWeight:'1000'}}>Add Your Recipe</h1>
-        <TextField variant="filled" multiline style={{borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.title} label="Title" required name="title" onChange={handleRecipeWrite}/>
-        <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.ingredients} label="Ingredients" name="ingredients" onChange={handleRecipeWrite}/>
-        <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", border: '1px solid black'}} value={recipe.instructions} label="Instructions" name="instructions" onChange={handleRecipeWrite}/>
+        <TextField helperText={titleHelper} error={titleError} variant="filled" multiline style={{borderRadius: "10px", width: "90%", /*border: '1px solid black'*/}} value={recipe.title} label="Title" required name="title" onChange={handleRecipeWrite}/>
+        <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", /*border: '1px solid black'*/}} value={recipe.ingredients} label="Ingredients" name="ingredients" onChange={handleRecipeWrite}/>
+        <TextField variant="filled" multiline style={{marginTop: "12px", borderRadius: "10px", width: "90%", /*border: '1px solid black'*/}} value={recipe.instructions} label="Instructions" name="instructions" onChange={handleRecipeWrite}/>
 
         <div style={{justifyContent: 'center', display: 'flex', flexDirection: 'row'}} >
         <Switch onChange={handleSwitch} checked={checked}/> 

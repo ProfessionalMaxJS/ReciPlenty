@@ -14,16 +14,31 @@ function EntryPage({loggedIn, setLoggedIn}){
   useEffect(()=>{
     fetch("https://foodish-api.herokuapp.com/api")
     .then(r=>r.json())
+    .catch(err=>alert(err))
     .then(d=>setImg1Url(d.image))
     
     fetch("https://foodish-api.herokuapp.com/api")
     .then(r=>r.json())
+    .catch(err=>alert(err))
     .then(d=>setImg2Url(d.image))
 
     fetch("https://foodish-api.herokuapp.com/api")
     .then(r=>r.json())
+    .catch(err=>alert(err))
     .then(d=>setImg3Url(d.image))
+
+    // fetch('/backend/users')
+    // .then(r=>r.json())
+    // .catch(err=>alert(err))
+    // .then(d=>{//console.log(d)
+    //   d.map(uA=>{//console.log(uA.name)
+    //     setUserArrray([...userArray, userArray.push(uA.name)])
+    //     // console.log(userArray)
+    // })})    
+
   },[])
+
+  // const [userArray, setUserArrray] = useState([])
     
   const [newBonaFides, setNewBonaFides] = useState({name:"", password:"", password_confirmation:""})
   const handleNewBonaFides=(e)=>{
@@ -61,17 +76,31 @@ function EntryPage({loggedIn, setLoggedIn}){
   // const toTheHouse = useNavigate()
   const handleSignUp=()=>{
 
+    // if(userArray.includes(`${newBonaFides.name}`)){
+    //   console.log("T")
+    //   setNewBFNameError(true)
+    //   return setNewBFNameHelper("Username is Already Taken; Please Select Another")
+    // }
+    // else 
     if(!newBonaFides.name){
       setNewBFNameHelper("Field Cannot be left Blank")
       return setNewBFNameError(true)
     }
-    if(!newBonaFides.password){
-      setNewBFPasswordHelper(("Field Cannot be left Blank"))
+    else if(!newBonaFides.password){
+      setNewBFPasswordHelper("Field Cannot be left Blank")
+      setNewBFPasswordConfirmError(true)
       return setNewBFPasswordError(true)
     }
-    if(!newBonaFides.password_confirmation){
+    else if(!newBonaFides.password_confirmation){
       setNewBFPasswordConfirmHelper("Field Cannot be left Blank")
+      setNewBFPasswordError(true)
       return setNewBFPasswordConfirmError(true)
+    }
+    else if(newBonaFides.password !== newBonaFides.password_confirmation){
+      setNewBFNameError(true)
+      setNewBFPasswordError(true)
+      setNewBFPasswordConfirmError(true)
+      return setNewBFPasswordConfirmHelper("Password Confirmation Does Not Match Password")
     }
 
     fetch("/backend/signup", {
@@ -105,7 +134,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       setReturnBFNameHelper("Field Cannot be left Blank")
       return setReturnBFNameError(true)
     }
-    if(!returnBonaFides.password){
+    else if(!returnBonaFides.password){
       setReturnBFPasswordHelper("Field Cannot be left Blank")
       return setReturnBFPasswordError(true)
     }

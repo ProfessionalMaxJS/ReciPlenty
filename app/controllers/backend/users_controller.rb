@@ -14,8 +14,10 @@ end
 def create
   # byebug
   @new_user = User.create!(user_params)
+  if(@new_user.valid?)
   session[:user_id] = @new_user.id
-  render json: @new_user, status: :created 
+  render json: @new_user, status: :created
+  end 
 end
 
 # def user_create

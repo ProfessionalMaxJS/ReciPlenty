@@ -81,21 +81,32 @@ function EntryPage({loggedIn, setLoggedIn}){
       },
       body: JSON.stringify(newBonaFides),
     })
-      .then(r => r.json())
-      .catch(err=>alert(err))
-      .then(d=>{//console.log(d)
-        if(d.error)
-          {setNewBFNameError(true)
-           setNewBFPasswordError(true)
-           setNewBFPasswordConfirmError(true)
-            let newStr=(d.exception).slice(31,-1)
-            // alert(newStr)}
-            setNewBFPasswordConfirmHelper(newStr)}
-        else
-          {setNewBonaFides({name:"", password:"", password_confirmation:""})
-          setLoggedIn(true)}
-            })
-      // .then(toTheHouse("/"))
+      .then(r =>// r.json())
+      {if (r.ok){
+        r.json()
+        console.log("T")
+        console.log(r)}
+        else{
+          r.json()
+          console.log("F")
+          console.log(r)
+        }
+      })
+
+      // .catch(err=>alert(err))
+      // .then(d=>{//console.log(d)
+      //   if(d.error)
+      //     {setNewBFNameError(true)
+      //      setNewBFPasswordError(true)
+      //      setNewBFPasswordConfirmError(true)
+      //       let newStr=(d.exception).slice(31,-1)
+      //       // alert(newStr)}
+      //       setNewBFPasswordConfirmHelper(newStr)}
+      //   else
+      //     {setNewBonaFides({name:"", password:"", password_confirmation:""})
+      //     setLoggedIn(true)}
+            // })
+      // // .then(toTheHouse("/"))
   }
 
  

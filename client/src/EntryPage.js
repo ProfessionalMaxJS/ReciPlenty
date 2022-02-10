@@ -111,7 +111,7 @@ function EntryPage({loggedIn, setLoggedIn}){
       body: JSON.stringify(newBonaFides),
     })
       .then(r => r.json())
-      .catch(err=>alert(err))
+            .catch(err=>alert(err))
       .then(d=>{//console.log(d)
         if(d.error)
           {setNewBFNameError(true)

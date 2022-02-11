@@ -266,7 +266,8 @@ function EntryPage({loggedIn, setLoggedIn}){
   </Card>
 </div>
 
-<p>Photos powered by <a href="www.foodish-api.herokuapp.com" style={{fontFamily: 'Alice, serif'}} > Foodish</a><br/>
+<p>The Credits: <br />
+   Photos powered by <a href="www.foodish-api.herokuapp.com" style={{fontFamily: 'Alice, serif'}} > Foodish</a><br/>
    Beer Pairings powered by <a href="https://punkapi.com/" style={{fontFamily: 'Alice, serif'}} > Punk API</a><br />
    Blogs, Trivia and Searchable Recipes powered by <a href="https://spoonacular.com/food-api" style={{fontFamily: 'Alice, serif'}} >Spoonacular</a>
 </p>

@@ -73,8 +73,8 @@ function NavBar({loggedIn, setLoggedIn}){
       fetch("/backend/logout", {
         method: "DELETE",
       })
-        .then((r) => r.json())
-        .catch((err) => alert(err))
+        // .then((r) => r.json())
+        // .catch((err) => alert(err))
         .then((data) => {//console.log(data)
                           setLoggedIn(false)
                         toTheHouse("/")})

@@ -132,8 +132,8 @@ useEffect(()=>{
       fetch(`/backend/saved_recipes/${id}`, {
         method: "DELETE"
       })
-      .then(r=>r.json())
-      .catch(err=>alert(err))
+      // .then(r=>r.json())
+      // .catch(err=>alert(err))
       .then(d=>{//console.log(d))
       toTheHouse("/")
     })}

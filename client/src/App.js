@@ -1,22 +1,23 @@
-import './App.css'
-import {useState} from 'react'
-import NavBar from './NavBar';
-import {Routes, Route} from 'react-router-dom'
-import UserOriginal from "./UserOriginal"
-import RecipeDisplayPage from './RecipeDisplayPage';
+import "./App.css";
+import { useState } from "react";
+import NavBar from "./NavBar";
+import { Routes, Route } from "react-router-dom";
+import UserOriginal from "./UserOriginal";
+import RecipeDisplayPage from "./RecipeDisplayPage";
 // import Button from '@mui/material/Button'
-import EntryPage from './EntryPage'
-import {useEffect} from 'react'
+import EntryPage from "./EntryPage";
+import { useEffect } from "react";
 
 function App() {
-
-  const [loggedIn, setLoggedIn] = useState(false)
-  useEffect(()=>{
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
     fetch("/backend/logged_in")
-    .then(r=>r.json())
-    .then(d=>{//console.log(d)
-              setLoggedIn(d.logged_in)})
-  }, [])
+      .then((r) => r.json())
+      .then((d) => {
+        //console.log(d)
+        setLoggedIn(d.logged_in);
+      });
+  }, []);
 
   // function handleSignOut() {
   //   fetch("/backend/logout", {
@@ -31,22 +32,30 @@ function App() {
   return (
     <>
       <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-<Routes>
- 
-  <Route path="/" element={<EntryPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
- 
-  <Route path="/UserOriginal" element={<UserOriginal loggedIn={loggedIn} />} />
+      <Routes>
+        <Route
+          path="/"
+          element={<EntryPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+        />
 
-  <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage  /> } />
-  
-  <Route path="/RecipeDisplayPage/:id/EditPage" element={<UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+        <Route
+          path="/UserOriginal"
+          element={<UserOriginal loggedIn={loggedIn} />}
+        />
 
-</Routes>
+        <Route path="/RecipeDisplayPage/:id" element={<RecipeDisplayPage />} />
 
-    {/* {loggedIn ? <Button variant="contained" style={{ fontFamily: 'Alice, serif', position: "absolute", bottom: "12px", right: "50%", transform: "translate( 50%)"}} onClick={handleSignOut}>SIGN OUT</Button> : <Button style={{ fontFamily: 'Alice, serif', position: "sticky", bottom: "12px", right: "50%", transform: "translate( 50%)"}} onClick={handleSignIn}>Log In or Sign Up!</Button>} */}
+        <Route
+          path="/RecipeDisplayPage/:id/EditPage"
+          element={
+            <UserOriginal loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+          }
+        />
+      </Routes>
+
+      {/* {loggedIn ? <Button variant="contained" style={{ fontFamily: 'Alice, serif', position: "absolute", bottom: "12px", right: "50%", transform: "translate( 50%)"}} onClick={handleSignOut}>SIGN OUT</Button> : <Button style={{ fontFamily: 'Alice, serif', position: "sticky", bottom: "12px", right: "50%", transform: "translate( 50%)"}} onClick={handleSignIn}>Log In or Sign Up!</Button>} */}
     </>
- 
- );
+  );
 }
 
 export default App;

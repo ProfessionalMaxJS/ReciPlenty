@@ -8,23 +8,28 @@ import Divider from "@mui/material/Divider";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { createClient } from 'pexels'
+import { pexelsApiKey, spoonacularApiKey } from "./apiKeys";
+
 
 function EntryPage({ loggedIn, setLoggedIn }) {
+
   useEffect(() => {
-    fetch("https://foodish-api.herokuapp.com/api")
-      .then((r) => r.json())
-      .catch((err) => alert(err))
-      .then((d) => setImg1Url(d.image));
 
-    fetch("https://foodish-api.herokuapp.com/api")
-      .then((r) => r.json())
-      .catch((err) => alert(err))
-      .then((d) => setImg2Url(d.image));
+    const client = createClient(pexelsApiKey)
+    const query = 'food'
 
-    fetch("https://foodish-api.herokuapp.com/api")
-      .then((r) => r.json())
-      .catch((err) => alert(err))
-      .then((d) => setImg3Url(d.image));
+  client.photos.search({ query, per_page: 10, size: "small" }).then(photos => {
+    photos.photos.map(pA => setPhotoArray([...photoArray, photoArray.push(pA.src.medium)]) )
+  });
+}, []);
+
+const [photoArray, setPhotoArray] = useState([])
+
+useEffect(() => {
+  setImg1Url(photoArray[Math.floor(Math.random()*10)])
+  setImg2Url(photoArray[Math.floor(Math.random()*10)])
+  setImg3Url(photoArray[Math.floor(Math.random()*10)])
 
     // fetch('/backend/users')
     // .then(r=>r.json())
@@ -34,7 +39,7 @@ function EntryPage({ loggedIn, setLoggedIn }) {
     //     setUserArrray([...userArray, userArray.push(uA.name)])
     //     // console.log(userArray)
     // })})
-  }, []);
+  }, [ photoArray ]);
 
   // const [userArray, setUserArrray] = useState([])
 
@@ -173,20 +178,19 @@ function EntryPage({ loggedIn, setLoggedIn }) {
       });
     // .then(toTheHouse("/"))
   }
-  const [img1Url, setImg1Url] = useState("");
+
+  const [img1Url, setImg1Url] = useState("")
   const [trivia, setTrivia] = useState("");
   const handleTrivia = () => {
     fetch(
-      "https://api.spoonacular.com/food/trivia/random?apiKey=b5e32d122c6b42b69718e6565a960525"
+      `https://api.spoonacular.com/food/trivia/random?apiKey=${spoonacularApiKey}`
     )
       .then((r) => r.json())
       .catch((err) => alert(err))
       .then((d) => setTrivia(d.text));
     // toTheCards("/")})
 
-    fetch("https://foodish-api.herokuapp.com/api")
-      .then((r) => r.json())
-      .then((d) => setImg1Url(d.image));
+      setImg1Url(photoArray[Math.floor(Math.random()*10)])
   };
 
   const [img2Url, setImg2Url] = useState("");
@@ -194,7 +198,7 @@ function EntryPage({ loggedIn, setLoggedIn }) {
   const [source, setSource] = useState("");
   const handleBlog = () => {
     fetch(
-      "https://api.spoonacular.com/recipes/random?number=1&tags=lunch&apiKey=b5e32d122c6b42b69718e6565a960525"
+`https://api.spoonacular.com/recipes/random?number=1&tags=lunch&apiKey=${spoonacularApiKey}`
     )
       .then((r) => r.json())
       .catch((err) => alert(err))
@@ -205,9 +209,7 @@ function EntryPage({ loggedIn, setLoggedIn }) {
         setSource(`${setup[0]}.com`);
       });
 
-    fetch("https://foodish-api.herokuapp.com/api")
-      .then((r) => r.json())
-      .then((d) => setImg2Url(d.image));
+      setImg2Url(photoArray[Math.floor(Math.random()*10)])
   };
 
   const [img3Url, setImg3Url] = useState("");
@@ -226,9 +228,7 @@ function EntryPage({ loggedIn, setLoggedIn }) {
         setPair(newNewStr);
       });
 
-    fetch("https://foodish-api.herokuapp.com/api")
-      .then((r) => r.json())
-      .then((d) => setImg3Url(d.image));
+      setImg3Url(photoArray[Math.floor(Math.random()*10)])
   };
 
   return (
@@ -453,13 +453,13 @@ function EntryPage({ loggedIn, setLoggedIn }) {
 
       <p>
         The Credits: <br />
-        Photos powered by{" "}
+        Photos provided by{" "}
         <a
-          href="www.foodish-api.herokuapp.com"
+          href="https://www.pexels.com"
           style={{ fontFamily: "Alice, serif" }}
         >
           {" "}
-          Foodish
+          Pexels
         </a>
         <br />
         Beer Pairings powered by{" "}

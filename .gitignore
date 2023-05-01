@@ -32,4 +32,4 @@
 node_modules
 
 #apiKeys
-/client/src/apiKey.js
+/client/src/apiKeys.js

@@ -18,19 +18,20 @@ function EntryPage({ loggedIn, setLoggedIn }) {
 
     const client = createClient(pexelsApiKey)
     const query = 'food'
-
-  client.photos.search({ query, per_page: 10, size: "small" }).then(photos => {
-    photos.photos.map(pA => setPhotoArray([...photoArray, photoArray.push(pA.src.medium)]) )
-  });
-}, []);
+    client.photos.search({ query, per_page: 10 }).then(photos => {
+        photos.photos.map(pA => setPhotoArray([...photoArray, photoArray.push(pA.src.medium)]))
+    });
+  }, []);
 
 const [photoArray, setPhotoArray] = useState([])
+function randomPhotoUrl(){
+return Math.floor(Math.random()*10)
+} 
 
 useEffect(() => {
-  setImg1Url(photoArray[Math.floor(Math.random()*10)])
-  setImg2Url(photoArray[Math.floor(Math.random()*10)])
-  setImg3Url(photoArray[Math.floor(Math.random()*10)])
-
+  setImg1Url(photoArray[randomPhotoUrl()])
+  setImg2Url(photoArray[randomPhotoUrl()])
+  setImg3Url(photoArray[randomPhotoUrl()])
     // fetch('/backend/users')
     // .then(r=>r.json())
     // .catch(err=>alert(err))
@@ -182,34 +183,34 @@ useEffect(() => {
   const [img1Url, setImg1Url] = useState("")
   const [trivia, setTrivia] = useState("");
   const handleTrivia = () => {
-    fetch(
-      `https://api.spoonacular.com/food/trivia/random?apiKey=${spoonacularApiKey}`
-    )
-      .then((r) => r.json())
-      .catch((err) => alert(err))
-      .then((d) => setTrivia(d.text));
+    // fetch(
+    //   `https://api.spoonacular.com/food/trivia/random?apiKey=${spoonacularApiKey}`
+    // )
+    //   .then((r) => r.json())
+    //   .catch((err) => alert(err))
+    //   .then((d) => setTrivia(d.text));
     // toTheCards("/")})
 
-      setImg1Url(photoArray[Math.floor(Math.random()*10)])
+    setImg1Url(photoArray[randomPhotoUrl()])
   };
 
   const [img2Url, setImg2Url] = useState("");
   const [blog, setBlog] = useState("");
   const [source, setSource] = useState("");
   const handleBlog = () => {
-    fetch(
-`https://api.spoonacular.com/recipes/random?number=1&tags=lunch&apiKey=${spoonacularApiKey}`
-    )
-      .then((r) => r.json())
-      .catch((err) => alert(err))
-      .then((d) => {
-        //console.log(d)
-        setBlog(d.recipes[0].creditsText);
-        let setup = d.recipes[0].sourceUrl.split(".com");
-        setSource(`${setup[0]}.com`);
-      });
+    // fetch(
+    //   `https://api.spoonacular.com/recipes/random?number=1&tags=lunch&apiKey=${spoonacularApiKey}`
+    // )
+    //   .then((r) => r.json())
+    //   .catch((err) => alert(err))
+    //   .then((d) => {
+    //     //console.log(d)
+    //     setBlog(d.recipes[0].creditsText);
+    //     let setup = d.recipes[0].sourceUrl.split(".com");
+    //     setSource(`${setup[0]}.com`);
+    //   });
 
-      setImg2Url(photoArray[Math.floor(Math.random()*10)])
+    setImg2Url(photoArray[randomPhotoUrl()])
   };
 
   const [img3Url, setImg3Url] = useState("");
@@ -228,7 +229,7 @@ useEffect(() => {
         setPair(newNewStr);
       });
 
-      setImg3Url(photoArray[Math.floor(Math.random()*10)])
+    setImg3Url(photoArray[randomPhotoUrl()])
   };
 
   return (

@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
+import { spoonacularApiKey } from "./apiKeys";
 
 function RecipeDisplayPage() {
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
@@ -34,12 +35,12 @@ function RecipeDisplayPage() {
   useEffect(() => {
     if (id > 999) {
       fetch(
-        `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=b5e32d122c6b42b69718e6565a960525`
+        `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=${spoonacularApiKey}`
       )
         .then((r) => r.json())
         .then((d) => {
           let newStr = "";
-          //console.log(d)
+          console.log(d)
           d.extendedIngredients.map((eI) => (newStr += `${eI.original}; \n`));
           setRecipe({
             title: d.title,

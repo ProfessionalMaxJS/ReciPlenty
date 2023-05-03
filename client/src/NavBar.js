@@ -10,6 +10,7 @@ import RecipesList from "./RecipesList";
 import Menu from "@mui/material/Menu";
 import Divider from "@mui/material/Divider";
 import SearchIcon from "@mui/icons-material/Search";
+import { spoonacularApiKey } from "./apiKeys";
 
 function NavBar({ loggedIn, setLoggedIn }) {
   // const elloGuvnah = () => {console.log("elloGuvnah!")}
@@ -32,7 +33,7 @@ function NavBar({ loggedIn, setLoggedIn }) {
     event.preventDefault();
     if (loggedIn) {
       fetch(
-        `https://api.spoonacular.com/recipes/searchComplex?query=${search}&number=5&instructionsRequired=true&apiKey=b5e32d122c6b42b69718e6565a960525`
+        `https://api.spoonacular.com/recipes/searchComplex?query=${search}&number=5&instructionsRequired=true&apiKey=${spoonacularApiKey}`
       )
         .then((r) => r.json())
         .then((data) => setRecipes(data.results))

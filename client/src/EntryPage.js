@@ -14,33 +14,29 @@ import { pexelsApiKey, spoonacularApiKey } from "./apiKeys";
 
 function EntryPage({ loggedIn, setLoggedIn }) {
 
+  const [photoArray, setPhotoArray] = useState([])
+
+  function randomPhotoUrl(){
+    return Math.floor(Math.random() * 10)
+  } 
+
   useEffect(() => {
 
     const client = createClient(pexelsApiKey)
     const query = 'food'
     client.photos.search({ query, per_page: 10 }).then(photos => {
         photos.photos.map(pA => setPhotoArray([...photoArray, photoArray.push(pA.src.medium)]))
-    });
-  }, []);
+        setImg1Url(photoArray[randomPhotoUrl()]) 
+        setImg2Url(photoArray[randomPhotoUrl()])
+        setImg3Url(photoArray[randomPhotoUrl()])
+    })
 
-const [photoArray, setPhotoArray] = useState([])
-function randomPhotoUrl(){
-return Math.floor(Math.random()*10)
-} 
+}, []);
 
-useEffect(() => {
-  setImg1Url(photoArray[randomPhotoUrl()])
-  setImg2Url(photoArray[randomPhotoUrl()])
-  setImg3Url(photoArray[randomPhotoUrl()])
-    // fetch('/backend/users')
-    // .then(r=>r.json())
-    // .catch(err=>alert(err))
-    // .then(d=>{//console.log(d)
-    //   d.map(uA=>{//console.log(uA.name)
-    //     setUserArrray([...userArray, userArray.push(uA.name)])
-    //     // console.log(userArray)
-    // })})
-  }, [ photoArray ]);
+// const [photoArray, setPhotoArray] = useState([])
+// function randomPhotoUrl(){
+// return Math.floor(Math.random() * 10)
+// } 
 
   // const [userArray, setUserArrray] = useState([])
 
@@ -386,7 +382,7 @@ useEffect(() => {
           <CardMedia
             component="img"
             height="150"
-            image={img1Url}
+            src={img1Url}
             alt={img1Url}
           />
           <Typography style={{ fontFamily: "Alice, serif" }}>
@@ -412,7 +408,7 @@ useEffect(() => {
           <CardMedia
             component="img"
             height="150"
-            image={img2Url}
+            src={img2Url}
             alt={img2Url}
           />
           <p style={{ fontFamily: "Alice, serif" }}>{blog}</p>
@@ -438,7 +434,7 @@ useEffect(() => {
           <CardMedia
             component="img"
             height="150"
-            image={img3Url}
+            src={img3Url}
             alt={img3Url}
           />
           <Typography style={{ fontFamily: "Alice, serif" }}>{pair}</Typography>
